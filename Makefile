@@ -1,4 +1,4 @@
-NAME		= pokemon-origins
+NAME		= mario
 SRCS		= main.c
 SRCSPATH	= ./srcs/
 INCLUDES	= ./includes/ 
