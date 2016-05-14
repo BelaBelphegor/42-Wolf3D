@@ -1,11 +1,11 @@
-NAME		= mario
+NAME		= wolf3d
 SRCS		= main.c
 SRCSPATH	= ./srcs/
-INCLUDES	= ./includes/ 
+INCLUDES	= ./includes
 CC			= clang
 CFLAGS		= -Wall -Werror -Wextra -O2
 SDL_CONFIG	= ~/.brew/Cellar/sdl2/2.0.4/bin/sdl2-config
-INCLUDES_O	= -I $(INCLUDES) -I ~/.brew/Cellar/sdl2/2.0.4/include
+INCLUDES_O	= -I $(INCLUDES)
 INCLUDES_C	= -L ~/.brew/Cellar/sdl2/2.0.4/lib -lSDL2 -lSDL2main `$(SDL_CONFIG) --cflags --libs`
 SRC			= $(addprefix $(SRCSPATH), $(SRCS))
 OBJS		= $(SRC:.c=.o)
