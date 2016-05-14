@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/04 05:19:31 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/05/14 16:46:20 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/05/14 18:54:23 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int main(void)
 	t_wolf3d		*wolf;
 	char			quit;
 	SDL_Event 		e;
-
+	char			buffer[1024];
 
 	if (!(wolf = wolf3d_create()))
 	{
@@ -76,6 +76,7 @@ int main(void)
 		return (-1);
 	}
 	quit = 1;
+	readfile("maps/intro.m3d", buffer);
 	while (quit)
 	{
 		while (SDL_PollEvent(&e))

@@ -1,36 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wolf3d.h                                           :+:      :+:    :+:   */
+/*   maps.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/05/14 15:46:49 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/05/14 18:55:37 by tiboitel         ###   ########.fr       */
+/*   Created: 2016/05/14 18:36:42 by tiboitel          #+#    #+#             */
+/*   Updated: 2016/05/14 19:00:20 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_WOLF3D_H
-# define FT_WOLF3D_H
+#include <Wolf3D/wolf3d.h>
 
-#include <SDL2/SDL.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <string.h>
-#include <stdio.h>
-
-typedef struct		s_wolf3d
+t_wmap		*wolf3d_map_create()
 {
-	SDL_Window		*pWindow;
-	SDL_Renderer	*renderer;
-}					t_wolf3d;
+	t_wmap		*map;
 
-typedef struct 		s_wolf_m3d
+	if (!(map = (t_wmap *)malloc(sizeof(t_wmap))))
+		return (NULL);
+	map->map = NULL;
+	return (map);
+}
+
+int			wolf3d_init_map(t_wmap *map, char *buffer)
 {
-	char			**map;
-}					t_wmap;
+	(void)map;
+	(void)buffer;
+	return (1);
+}
 
-int					readfile(char *file, char *buffer);
-#endif
+void		wolf3d_map_destroy(t_wmap *map)
+{
+	if (map)
+		free(map);
+	map = NULL;
+	(void)map;
+}

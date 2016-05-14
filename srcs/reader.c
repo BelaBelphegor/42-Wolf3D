@@ -1,36 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wolf3d.h                                           :+:      :+:    :+:   */
+/*   reader.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/05/14 15:46:49 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/05/14 18:55:37 by tiboitel         ###   ########.fr       */
+/*   Created: 2016/05/14 18:38:52 by tiboitel          #+#    #+#             */
+/*   Updated: 2016/05/14 18:51:03 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_WOLF3D_H
-# define FT_WOLF3D_H
+#include <Wolf3D/wolf3d.h>
 
-#include <SDL2/SDL.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <string.h>
-#include <stdio.h>
-
-typedef struct		s_wolf3d
+int		readfile(char *file, char *buffer)
 {
-	SDL_Window		*pWindow;
-	SDL_Renderer	*renderer;
-}					t_wolf3d;
+	int		fd;
+	int		i;
 
-typedef struct 		s_wolf_m3d
-{
-	char			**map;
-}					t_wmap;
-
-int					readfile(char *file, char *buffer);
-#endif
+	if ((fd = open(file, O_RDONLY)) == -1)
+	{
+		perror(strerror(errno));
+		return (-1); 
+	}
+	i = 0;
+	while ((read(fd, buffer + i, sizeof(buffer))) != 0)
+		i += sizeof(buffer);
+	close(fd);
+	return (0);
+}

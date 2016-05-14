@@ -1,5 +1,7 @@
 NAME		= wolf3d
-SRCS		= main.c
+SRCS		= main.c \
+			  maps.c \
+			  reader.c
 SRCSPATH	= ./srcs/
 INCLUDES	= ./includes
 CC			= clang
