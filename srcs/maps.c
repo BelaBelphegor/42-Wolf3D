@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 18:36:42 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/05/14 19:00:20 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/05/14 19:37:29 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@ t_wmap		*wolf3d_map_create()
 
 int			wolf3d_init_map(t_wmap *map, char *buffer)
 {
+	// Compter le nombre de \n.
+	// Allouer n ligne a map->map.
+	// Tant que i != de la taille du buffer
+	// Compter le nombre de caracter jusqu'au prochain \n
+	// Allouer et copier n caractere de buffer vers maps de x lignes
+	// Deplacer curseur jusque caractere suivant le \n
 	(void)map;
 	(void)buffer;
 	return (1);
