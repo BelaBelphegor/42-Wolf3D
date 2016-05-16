@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reader.c                                           :+:      :+:    :+:   */
+/*   ft_stcknew.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/05/14 18:38:52 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/05/16 19:57:23 by tiboitel         ###   ########.fr       */
+/*   Created: 2014/11/26 21:40:25 by tiboitel          #+#    #+#             */
+/*   Updated: 2015/02/18 21:15:56 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <Wolf3D/wolf3d.h>
+#include <libft.h>
 
-int		readfile(char *file, char *buffer)
+t_stack	*ft_stcknew(size_t size_max)
 {
-	int		fd;
-	int		i;
+	t_stack		*newstack;
 
-	if ((fd = open(file, O_RDONLY)) == -1)
-	{
-		perror(strerror(errno));
-		return (-1); 
-	}
-	i = 0;
-	while ((read(fd, buffer + i, sizeof(buffer))) != 0)
-		i += sizeof(buffer);
-	buffer[i] = '\0';
-	buffer[i + 1] = '\0';
-	close(fd);
-	return (0);
+	if (!size_max)
+		return (NULL);
+	if ((newstack = (t_stack *)ft_memalloc(sizeof(t_stack))) == NULL)
+		return (NULL);
+	newstack->element = (t_stckelement **)ft_memalloc(sizeof(t_stckelement) * \
+			size_max);
+	if (newstack->element == NULL)
+		return (NULL);
+	newstack->top = -1;
+	return (newstack);
 }

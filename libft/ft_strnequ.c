@@ -1,32 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reader.c                                           :+:      :+:    :+:   */
+/*   ft_strnequ.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/05/14 18:38:52 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/05/16 19:57:23 by tiboitel         ###   ########.fr       */
+/*   Created: 2014/11/10 02:35:04 by tiboitel          #+#    #+#             */
+/*   Updated: 2014/11/10 03:15:42 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <Wolf3D/wolf3d.h>
+#include <libft.h>
 
-int		readfile(char *file, char *buffer)
+int		ft_strnequ(char const *s1, char const *s2, size_t n)
 {
-	int		fd;
-	int		i;
-
-	if ((fd = open(file, O_RDONLY)) == -1)
-	{
-		perror(strerror(errno));
-		return (-1); 
-	}
-	i = 0;
-	while ((read(fd, buffer + i, sizeof(buffer))) != 0)
-		i += sizeof(buffer);
-	buffer[i] = '\0';
-	buffer[i + 1] = '\0';
-	close(fd);
-	return (0);
+	if (!s1 || !s2)
+		return (0);
+	return ((ft_strncmp(s1, s2, n) == 0) ? 1 : 0);
 }

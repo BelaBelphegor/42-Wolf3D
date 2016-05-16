@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reader.c                                           :+:      :+:    :+:   */
+/*   ft_intlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/05/14 18:38:52 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/05/16 19:57:23 by tiboitel         ###   ########.fr       */
+/*   Created: 2014/12/15 17:08:03 by tiboitel          #+#    #+#             */
+/*   Updated: 2014/12/15 18:35:49 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <Wolf3D/wolf3d.h>
-
-int		readfile(char *file, char *buffer)
+int		ft_intlen(int nb)
 {
-	int		fd;
-	int		i;
+	int		ret;
 
-	if ((fd = open(file, O_RDONLY)) == -1)
+	ret = 1;
+	if (nb < 0)
+		nb = -nb;
+	while (nb > 9)
 	{
-		perror(strerror(errno));
-		return (-1); 
+		nb = nb / 10;
+		ret++;
 	}
-	i = 0;
-	while ((read(fd, buffer + i, sizeof(buffer))) != 0)
-		i += sizeof(buffer);
-	buffer[i] = '\0';
-	buffer[i + 1] = '\0';
-	close(fd);
-	return (0);
+	return (ret);
 }

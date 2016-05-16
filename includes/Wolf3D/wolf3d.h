@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 15:46:49 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/05/14 19:01:43 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/05/16 20:09:20 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,35 @@
 # define FT_WOLF3D_H
 
 #include <SDL2/SDL.h>
+#include <libft.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <fcntl.h>
 #include <errno.h>
 #include <string.h>
 #include <stdio.h>
+# define DESIRED_FRAME 60
+# define WINDW_W 1280
+# define WINDW_H 966
+# define SCREEN_FPS 60
+# define SCREEN_TICKS_PER_FRAME 1000 / SCREEN_FPS
+
+typedef struct 		s_wolf_m3d
+{
+	char			**map;
+}					t_wmap;			
 
 typedef struct		s_wolf3d
 {
 	SDL_Window		*pWindow;
 	SDL_Renderer	*renderer;
+	// Frames per s timer
+	int				frame;
+	t_wmap			*map;
 }					t_wolf3d;
 
-typedef struct 		s_wolf_m3d
-{
-	char			**map;
-}					t_wmap;
-
 int					readfile(char *file, char *buffer);
+t_wmap				*woldf3d_map_create(void);
+int					wolf3d_init_map(t_wmap *map, char *buffer);
+void				wolf3d_map_destroy(t_wmap *map);
 #endif

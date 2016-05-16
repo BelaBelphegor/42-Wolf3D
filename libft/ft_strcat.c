@@ -1,32 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reader.c                                           :+:      :+:    :+:   */
+/*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/05/14 18:38:52 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/05/16 19:57:23 by tiboitel         ###   ########.fr       */
+/*   Created: 2014/11/15 00:04:16 by tiboitel          #+#    #+#             */
+/*   Updated: 2014/11/15 01:20:32 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <Wolf3D/wolf3d.h>
+#include <libft.h>
 
-int		readfile(char *file, char *buffer)
+char	*ft_strcat(char *s1, const char *s2)
 {
-	int		fd;
-	int		i;
-
-	if ((fd = open(file, O_RDONLY)) == -1)
-	{
-		perror(strerror(errno));
-		return (-1); 
-	}
-	i = 0;
-	while ((read(fd, buffer + i, sizeof(buffer))) != 0)
-		i += sizeof(buffer);
-	buffer[i] = '\0';
-	buffer[i + 1] = '\0';
-	close(fd);
-	return (0);
+	return (ft_strncat(s1, s2, ft_strlen(s2)));
 }

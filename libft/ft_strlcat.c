@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reader.c                                           :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/05/14 18:38:52 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/05/16 19:57:23 by tiboitel         ###   ########.fr       */
+/*   Created: 2014/11/11 02:34:46 by tiboitel          #+#    #+#             */
+/*   Updated: 2014/11/13 00:09:20 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <Wolf3D/wolf3d.h>
+#include <libft.h>
 
-int		readfile(char *file, char *buffer)
+size_t		ft_strlcat(char *dst, const char *src, size_t size)
 {
-	int		fd;
-	int		i;
+	size_t		i;
+	size_t		j;
 
-	if ((fd = open(file, O_RDONLY)) == -1)
-	{
-		perror(strerror(errno));
-		return (-1); 
-	}
 	i = 0;
-	while ((read(fd, buffer + i, sizeof(buffer))) != 0)
-		i += sizeof(buffer);
-	buffer[i] = '\0';
-	buffer[i + 1] = '\0';
-	close(fd);
-	return (0);
+	j = 0;
+	while (i < size && dst[i] != '\0')
+		++i;
+	if (size == i)
+		return (i + ft_strlen(src));
+	while (src[j] != '\0' && size - j - 1 > i)
+	{
+		dst[i + j] = src[j];
+		++j;
+	}
+	dst[i + j] = '\0';
+	return (i + ft_strlen(src));
 }

@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reader.c                                           :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/05/14 18:38:52 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/05/16 19:57:23 by tiboitel         ###   ########.fr       */
+/*   Created: 2014/11/09 21:39:43 by tiboitel          #+#    #+#             */
+/*   Updated: 2014/11/13 00:08:51 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <Wolf3D/wolf3d.h>
+#include <libft.h>
 
-int		readfile(char *file, char *buffer)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	int		fd;
-	int		i;
-
-	if ((fd = open(file, O_RDONLY)) == -1)
+	if (!s1 || !s2)
+		return (0);
+	while (n != 0)
 	{
-		perror(strerror(errno));
-		return (-1); 
+		if (*((unsigned char *)s1) != *((unsigned char *)s2))
+			return (*((unsigned char *)s1) - *((unsigned char *)s2));
+		s1++;
+		s2++;
+		n--;
 	}
-	i = 0;
-	while ((read(fd, buffer + i, sizeof(buffer))) != 0)
-		i += sizeof(buffer);
-	buffer[i] = '\0';
-	buffer[i + 1] = '\0';
-	close(fd);
 	return (0);
 }

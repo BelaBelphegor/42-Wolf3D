@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reader.c                                           :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/05/14 18:38:52 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/05/16 19:57:23 by tiboitel         ###   ########.fr       */
+/*   Created: 2014/11/05 19:39:59 by tiboitel          #+#    #+#             */
+/*   Updated: 2014/11/09 21:41:50 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <Wolf3D/wolf3d.h>
+#include <libft.h>
 
-int		readfile(char *file, char *buffer)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	int		fd;
-	int		i;
+	size_t			i;
+	unsigned char	*s1;
 
-	if ((fd = open(file, O_RDONLY)) == -1)
-	{
-		perror(strerror(errno));
-		return (-1); 
-	}
 	i = 0;
-	while ((read(fd, buffer + i, sizeof(buffer))) != 0)
-		i += sizeof(buffer);
-	buffer[i] = '\0';
-	buffer[i + 1] = '\0';
-	close(fd);
-	return (0);
+	s1 = (unsigned char *)s;
+	while (i < n)
+	{
+		if (*s1 == (unsigned char)c)
+			return ((void *)s1);
+		s1++;
+		i++;
+	}
+	return (NULL);
 }

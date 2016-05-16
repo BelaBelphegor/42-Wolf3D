@@ -1,32 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reader.c                                           :+:      :+:    :+:   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/05/14 18:38:52 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/05/16 19:57:23 by tiboitel         ###   ########.fr       */
+/*   Created: 2014/11/12 19:18:49 by tiboitel          #+#    #+#             */
+/*   Updated: 2014/12/15 18:35:30 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <Wolf3D/wolf3d.h>
+#include <libft.h>
 
-int		readfile(char *file, char *buffer)
+char		*ft_itoa(int n)
 {
-	int		fd;
-	int		i;
+	size_t	length;
+	char	*a;
 
-	if ((fd = open(file, O_RDONLY)) == -1)
+	if (n == -2147483648)
+		return (ft_strdup("-2147483648"));
+	length = ft_intlen(n);
+	if ((a = ft_strnew(length + 1 + ((n < 0) ? 1 : 0))) == NULL)
+		return (NULL);
+	if (n < 0)
 	{
-		perror(strerror(errno));
-		return (-1); 
+		a[0] = '-';
+		n = -n;
 	}
-	i = 0;
-	while ((read(fd, buffer + i, sizeof(buffer))) != 0)
-		i += sizeof(buffer);
-	buffer[i] = '\0';
-	buffer[i + 1] = '\0';
-	close(fd);
-	return (0);
+	else
+		length--;
+	while (n > 9)
+	{
+		a[length--] = '0' + n % 10;
+		n = n / 10;
+	}
+	if (n >= 0)
+	{
+		a[length] = '0' + n;
+	}
+	return (a);
 }

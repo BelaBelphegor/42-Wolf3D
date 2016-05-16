@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reader.c                                           :+:      :+:    :+:   */
+/*   ft_strncat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/05/14 18:38:52 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/05/16 19:57:23 by tiboitel         ###   ########.fr       */
+/*   Created: 2014/11/04 17:25:31 by tiboitel          #+#    #+#             */
+/*   Updated: 2014/11/14 05:27:48 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <Wolf3D/wolf3d.h>
+#include <libft.h>
 
-int		readfile(char *file, char *buffer)
+char	*ft_strncat(char *dest, const char *src, size_t n)
 {
-	int		fd;
-	int		i;
+	size_t	i;
+	size_t	j;
 
-	if ((fd = open(file, O_RDONLY)) == -1)
-	{
-		perror(strerror(errno));
-		return (-1); 
-	}
 	i = 0;
-	while ((read(fd, buffer + i, sizeof(buffer))) != 0)
-		i += sizeof(buffer);
-	buffer[i] = '\0';
-	buffer[i + 1] = '\0';
-	close(fd);
-	return (0);
+	j = 0;
+	if (!dest || !src)
+		return (0);
+	if (!n)
+		return (dest);
+	i = ft_strlen(dest);
+	while (src[j] != '\0' && n-- > 0)
+	{
+		dest[i++] = src[j++];
+	}
+	dest[i] = '\0';
+	return (dest);
 }

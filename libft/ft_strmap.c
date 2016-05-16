@@ -1,32 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reader.c                                           :+:      :+:    :+:   */
+/*   ft_strmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/05/14 18:38:52 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/05/16 19:57:23 by tiboitel         ###   ########.fr       */
+/*   Created: 2014/11/10 02:10:17 by tiboitel          #+#    #+#             */
+/*   Updated: 2014/11/14 01:59:32 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <Wolf3D/wolf3d.h>
+#include <libft.h>
 
-int		readfile(char *file, char *buffer)
+char	*ft_strmap(const char *s, char (*f)(char))
 {
-	int		fd;
-	int		i;
+	size_t	i;
+	size_t	length;
+	char	*ret;
 
-	if ((fd = open(file, O_RDONLY)) == -1)
-	{
-		perror(strerror(errno));
-		return (-1); 
-	}
+	if (!s || !f)
+		return (NULL);
 	i = 0;
-	while ((read(fd, buffer + i, sizeof(buffer))) != 0)
-		i += sizeof(buffer);
-	buffer[i] = '\0';
-	buffer[i + 1] = '\0';
-	close(fd);
-	return (0);
+	length = ft_strlen(s);
+	if ((ret = (char *)malloc(sizeof(char) * (length + 1))) == NULL)
+		return (NULL);
+	while (s[i] != '\0')
+	{
+		ret[i] = f(s[i]);
+		i++;
+	}
+	ret[i] = '\0';
+	return (ret);
 }

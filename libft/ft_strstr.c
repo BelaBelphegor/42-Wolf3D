@@ -1,32 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reader.c                                           :+:      :+:    :+:   */
+/*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/05/14 18:38:52 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/05/16 19:57:23 by tiboitel         ###   ########.fr       */
+/*   Created: 2014/11/03 19:26:06 by tiboitel          #+#    #+#             */
+/*   Updated: 2015/03/05 20:43:22 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <Wolf3D/wolf3d.h>
+#include <libft.h>
 
-int		readfile(char *file, char *buffer)
+char		*ft_strstr(const char *s1, const char *s2)
 {
-	int		fd;
-	int		i;
+	char	*t1;
+	char	*t2;
+	char	*t3;
 
-	if ((fd = open(file, O_RDONLY)) == -1)
+	t1 = (char *)s1;
+	while (*t1)
 	{
-		perror(strerror(errno));
-		return (-1); 
+		t3 = t1;
+		t2 = (char *)s2;
+		while (*t2 && *t2 == *t3)
+		{
+			++t2;
+			++t3;
+		}
+		++t1;
+		if (*t2 == '\0')
+			return (t1 - 1);
 	}
-	i = 0;
-	while ((read(fd, buffer + i, sizeof(buffer))) != 0)
-		i += sizeof(buffer);
-	buffer[i] = '\0';
-	buffer[i + 1] = '\0';
-	close(fd);
-	return (0);
+	if (!*s1 && !*s2)
+		return (t1);
+	return (NULL);
 }

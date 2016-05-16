@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reader.c                                           :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/05/14 18:38:52 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/05/16 19:57:23 by tiboitel         ###   ########.fr       */
+/*   Created: 2014/11/13 01:12:07 by tiboitel          #+#    #+#             */
+/*   Updated: 2014/11/14 05:28:23 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <Wolf3D/wolf3d.h>
+#include <libft.h>
 
-int		readfile(char *file, char *buffer)
+t_list	*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
 {
-	int		fd;
-	int		i;
+	t_list	*tmp;
 
-	if ((fd = open(file, O_RDONLY)) == -1)
+	if (lst != NULL && f)
 	{
-		perror(strerror(errno));
-		return (-1); 
+		tmp = (t_list*)ft_memalloc(sizeof(f(lst)));
+		if (tmp == NULL)
+			return (NULL);
+		tmp = f(lst);
+		tmp->next = ft_lstmap(lst->next, f);
+		return (tmp);
 	}
-	i = 0;
-	while ((read(fd, buffer + i, sizeof(buffer))) != 0)
-		i += sizeof(buffer);
-	buffer[i] = '\0';
-	buffer[i + 1] = '\0';
-	close(fd);
-	return (0);
+	return (NULL);
 }

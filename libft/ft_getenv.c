@@ -1,32 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reader.c                                           :+:      :+:    :+:   */
+/*   ft_getenv.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/05/14 18:38:52 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/05/16 19:57:23 by tiboitel         ###   ########.fr       */
+/*   Created: 2015/03/07 17:04:40 by tiboitel          #+#    #+#             */
+/*   Updated: 2015/03/07 17:37:31 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <Wolf3D/wolf3d.h>
+#include <libft.h>
 
-int		readfile(char *file, char *buffer)
+char	*ft_getenv(char **env, const char *name)
 {
-	int		fd;
+	char	*env_var;
 	int		i;
 
-	if ((fd = open(file, O_RDONLY)) == -1)
+	i = -1;
+	if (!name || !env)
+		return (NULL);
+	env_var = ft_strjoin(name, "=");
+	while (env[++i])
 	{
-		perror(strerror(errno));
-		return (-1); 
+		if (!ft_strncmp(env[i], env_var, ft_strlen(env_var)))
+		{
+			free(env_var);
+			env_var = ft_strdup(env[i] + (ft_strlen(name) + 1));
+			return (env_var);
+		}
 	}
-	i = 0;
-	while ((read(fd, buffer + i, sizeof(buffer))) != 0)
-		i += sizeof(buffer);
-	buffer[i] = '\0';
-	buffer[i + 1] = '\0';
-	close(fd);
-	return (0);
+	return (NULL);
 }

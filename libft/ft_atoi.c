@@ -1,32 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reader.c                                           :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/05/14 18:38:52 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/05/16 19:57:23 by tiboitel         ###   ########.fr       */
+/*   Created: 2014/11/04 19:39:08 by tiboitel          #+#    #+#             */
+/*   Updated: 2015/03/02 19:19:57 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <Wolf3D/wolf3d.h>
+#include <libft.h>
 
-int		readfile(char *file, char *buffer)
+int		ft_atoi(const char *str)
 {
-	int		fd;
-	int		i;
+	int		result;
+	int		operator;
 
-	if ((fd = open(file, O_RDONLY)) == -1)
+	result = 0;
+	operator = 1;
+	while (ft_iswhitespace(*str))
+		str++;
+	if (*str == '+' || *str == '-')
 	{
-		perror(strerror(errno));
-		return (-1); 
+		if (*str == '-')
+			operator = -1;
+		str++;
 	}
-	i = 0;
-	while ((read(fd, buffer + i, sizeof(buffer))) != 0)
-		i += sizeof(buffer);
-	buffer[i] = '\0';
-	buffer[i + 1] = '\0';
-	close(fd);
-	return (0);
+	while (ft_isdigit(*str))
+	{
+		result = result * 10 + operator * (*str - '0');
+		str++;
+	}
+	return (result);
 }
