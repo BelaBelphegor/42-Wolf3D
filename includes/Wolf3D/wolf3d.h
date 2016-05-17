@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 15:46:49 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/05/16 20:09:20 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/05/17 17:20:22 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,13 @@ typedef struct		s_wolf3d
 }					t_wolf3d;
 
 int					readfile(char *file, char *buffer);
+t_wolf3d			*wolf3d_create(void);
 t_wmap				*woldf3d_map_create(void);
+int					wolf3d_loader(t_wolf3d *wolf);
+void				wolf3d_core(t_wolf3d *wolf);
 int					wolf3d_init_map(t_wmap *map, char *buffer);
 void				wolf3d_map_destroy(t_wmap *map);
+int					wolf3d_init_graphics(t_wolf3d *wolf);
+void				wolf3d_close(t_wolf3d *wolf);
+void				wolf3d_destroy_graphics(t_wolf3d *wolf);
 #endif
