@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 17:04:46 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/05/17 17:20:24 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/05/17 19:28:19 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_wolf3d 	*wolf3d_create()
 	wolf->renderer = NULL;
 	wolf->frame = 0;
 	wolf->map = NULL;
+	wolf->map = wolf3d_map_create();
 	return (wolf);
 }
 
@@ -45,6 +46,18 @@ void	wolf3d_core(t_wolf3d *wolf)
 			if (e.type == SDL_KEYDOWN)
 				quit = 0;
 		}
+		/* Game initilisation
+		wolf->player.x = 22;
+		wolf->player.y = 12;
+		
+		// Initial direction vector
+		wolf->player.dirx = -1;
+		wolf->player.diry = 0;
+
+		// 2D raycaster camera plane
+		wolf->raycaster.planex = 0;
+		wolf->raycaster.planey = 0.66;
+		*/
 		// Render
 		SDL_SetRenderDrawColor(wolf->renderer, 0, 0,0, 0);
 		SDL_RenderClear(wolf->renderer);
@@ -56,6 +69,7 @@ void	wolf3d_core(t_wolf3d *wolf)
 		SDL_RenderDrawPoint(wolf->renderer, 50, 50);
 		SDL_RenderPresent(wolf->renderer);
 		wolf->frame = 0;
+		
 		// FPS.
 		executionTime = SDL_GetTicks() - currentTime;
 		remainingTime = ((int)(SCREEN_TICKS_PER_FRAME - executionTime) < 0) ? 0 : SCREEN_TICKS_PER_FRAME - executionTime;
@@ -66,9 +80,12 @@ void	wolf3d_core(t_wolf3d *wolf)
 
 void	wolf3d_close(t_wolf3d *wolf)
 {
-	wolf3d_destroy_graphics(wolf);
-	wolf3d_map_destroy(wolf->map);
+	if (wolf->map)
+		wolf3d_map_destroy(wolf->map);
+	if (wolf)
+		wolf3d_destroy_graphics(wolf);	
 	free(wolf);
 	wolf = NULL;
-	SDL_Quit();	
+	SDL_Quit();
+	exit(0);
 }

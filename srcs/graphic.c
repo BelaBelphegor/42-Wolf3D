@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 17:05:36 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/05/17 17:16:46 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/05/17 19:26:08 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ int		wolf3d_init_graphics(t_wolf3d *wolf)
 
 void	wolf3d_destroy_graphics(t_wolf3d *wolf)
 {
-	if (wolf && wolf->pWindow)
-		SDL_DestroyWindow(wolf->pWindow);
 	if (wolf && wolf->renderer)
 		SDL_DestroyRenderer(wolf->renderer);
+	if (wolf && wolf->pWindow)
+		SDL_DestroyWindow(wolf->pWindow);
 	wolf->pWindow = NULL;
 	wolf->renderer = NULL;
 }

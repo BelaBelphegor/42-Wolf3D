@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 18:36:42 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/05/17 16:44:29 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/05/17 19:32:23 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,15 @@ int			wolf3d_init_map(t_wmap *map, char *buffer)
 	if (!buffer || buffer[0] == 0)
 		return (-1);
 	if (!map || map == NULL)
-	{
-		if (!(map = wolf3d_map_create()))
-			return (-1);
-	}
+		return (-1);
 	while (buffer[i] != '\0')
 	{
 		if (buffer[i] == '\n')
 			n++;
 		i++;
 	}
-	if (!(map->map = (char **)ft_memalloc(sizeof(char *) * n)))
-		return (-1);
+	if (!(map->map = (char **)ft_memalloc(sizeof(char *) * n + 1)))
+		return (-1);	
 	map->map[n] = NULL;
 	i = 0;
 	j = 0;
@@ -58,9 +55,9 @@ int			wolf3d_init_map(t_wmap *map, char *buffer)
 			strncpy(map->map[j], buffer + (i - k), k);
 			map->map[j][k] = '\0';
 			k = -1;
+			j++;
 		}
 		i++;
-		j++;
 		k++;
 	}
 	return (1);
@@ -77,12 +74,13 @@ void		wolf3d_map_destroy(t_wmap *map)
 	int		i;
 
 	i = 0;
-	if (map)
-	{	
+	if (map != NULL)
+	{
 		while (map->map[i] != NULL)
 		{
-			free(map->map[i]);
-			map->map[i] = NULL;
+			free(map->map[i]);	
+			map->map[i] = NULL;	
+			i++;
 		}
 		free(map->map);
 		map->map = NULL;

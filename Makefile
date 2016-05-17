@@ -1,10 +1,12 @@
 NAME		= wolf3d
 SRCS		= main.c \
 			  wolf3d.c \
+			  game.c \
 			  maps.c \
 			  reader.c \
 			  load.c \
-			  graphic.c
+			  graphic.c \
+			  raytracer.c 
 SRCSPATH	= ./srcs/
 INCLUDES	= ./includes
 CC			= clang

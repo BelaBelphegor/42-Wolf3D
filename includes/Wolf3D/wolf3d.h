@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 15:46:49 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/05/17 17:20:22 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/05/17 18:52:08 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,20 @@
 # define SCREEN_FPS 60
 # define SCREEN_TICKS_PER_FRAME 1000 / SCREEN_FPS
 
+typedef struct		s_wolf_raycaster
+{
+	double			planex;
+	double			planey;
+}					t_wraycaster;
+
+typedef struct		s_wolf_player
+{
+	double			x;
+	double			y;
+	double			dirx;
+	double			diry;
+}					t_wplayer;
+
 typedef struct 		s_wolf_m3d
 {
 	char			**map;
@@ -39,11 +53,13 @@ typedef struct		s_wolf3d
 	// Frames per s timer
 	int				frame;
 	t_wmap			*map;
+	t_wplayer		player;
+	t_wraycaster	raycaster;
 }					t_wolf3d;
 
 int					readfile(char *file, char *buffer);
 t_wolf3d			*wolf3d_create(void);
-t_wmap				*woldf3d_map_create(void);
+t_wmap				*wolf3d_map_create(void);
 int					wolf3d_loader(t_wolf3d *wolf);
 void				wolf3d_core(t_wolf3d *wolf);
 int					wolf3d_init_map(t_wmap *map, char *buffer);
