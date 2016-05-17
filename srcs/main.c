@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/04 05:19:31 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/05/16 20:15:52 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/05/17 16:44:49 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	wolf3d_core(t_wolf3d *wolf)
 	quit = 1;
 	readfile("maps/intro.m3d", buffer);
 	ft_bzero(buffer, 1024);
-	// wolf3d_init_map(wolf->map, buffer);
+	 wolf3d_init_map(wolf->map, buffer);
 	while (quit)
 	{
 		currentTime = SDL_GetTicks();
