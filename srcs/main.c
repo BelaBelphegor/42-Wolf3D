@@ -6,15 +6,16 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/04 05:19:31 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/05/17 19:27:55 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/05/17 19:59:08 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <Wolf3D/wolf3d.h>
 
-int main(void)
+int		main(void)
 {
 	t_wolf3d		*wolf;
+
 	if (!(wolf = wolf3d_create()))
 	{
 		wolf3d_close(wolf);

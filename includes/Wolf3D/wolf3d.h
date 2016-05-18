@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 15:46:49 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/05/17 18:52:08 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/05/18 19:19:03 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,26 @@ typedef struct		s_wolf_raycaster
 {
 	double			planex;
 	double			planey;
+	double			camerax;
+	double			rayposx;
+	double			rayposy;
+	double			raydirx;
+	double			raydiry;
+	int				mapx;
+	int				mapy;
+	double			sidedistx;
+	double			sidedisty;
+	double			deltadistx;
+	double			deltadisty;
+	double			perpwalldist;
+	int				stepx;
+	int				stepy;
+	int				hit;
+	int				side;
+	// render
+	int				lineheight;
+	int				drawstart;
+	int				drawend;
 }					t_wraycaster;
 
 typedef struct		s_wolf_player
