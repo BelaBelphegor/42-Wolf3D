@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 18:36:42 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/05/19 19:49:52 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/05/31 16:40:55 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,17 @@ int			wolf3d_init_map(t_wmap *map, char *buffer)
 			n++;
 		i++;
 	}
-	if (!(map->map = (char **)ft_memalloc(sizeof(char *) * n + 1)))
+	if (!(map->map = (char **)ft_memalloc(sizeof(char *) * (n + 1))))
 		return (-1);
 	map->map[n] = NULL;
 	i = 0;
 	j = 0;
+	k = 0;
 	while (buffer[i] != '\0')
 	{
 		if (buffer[i] == '\n')
 		{
-			if (!(map->map[j] = (char *)ft_memalloc(sizeof(char) * k + 1)))
+			if (!(map->map[j] = (char *)ft_memalloc(sizeof(char) * (k + 1))))
 				return (-1);
 			strncpy(map->map[j], buffer + (i - k), k);
 			map->map[j][k] = '\0';
@@ -60,6 +61,7 @@ int			wolf3d_init_map(t_wmap *map, char *buffer)
 		i++;
 		k++;
 	}
+	i = 1;
 	return (1);
 }
 

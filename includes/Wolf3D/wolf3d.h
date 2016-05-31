@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 15:46:49 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/05/19 19:10:35 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/05/31 21:44:12 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 #include <stdio.h>
 #include <math.h>
 # define DESIRED_FRAME 60
-# define WINDW_W 1280
-# define WINDW_H 966
+# define WINDW_W 1680 
+# define WINDW_H 1080
 # define SCREEN_FPS 60
 # define SCREEN_TICKS_PER_FRAME 1000 / SCREEN_FPS
 
@@ -76,6 +76,7 @@ typedef struct		s_wolf3d
 	t_wmap			*map;
 	t_wplayer		player;
 	t_wraycaster	raycaster;
+	SDL_Texture		*texture;
 }					t_wolf3d;
 
 int					readfile(char *file, char *buffer);
@@ -88,4 +89,7 @@ void				wolf3d_map_destroy(t_wmap *map);
 int					wolf3d_init_graphics(t_wolf3d *wolf);
 void				wolf3d_close(t_wolf3d *wolf);
 void				wolf3d_destroy_graphics(t_wolf3d *wolf);
+void				wolf3d_draw_raycaster(t_wolf3d *wolf, unsigned int x);
+void				wolf3d_render(t_wolf3d *wolf);
+void				wolf3d_update(t_wolf3d *wolf);
 #endif
