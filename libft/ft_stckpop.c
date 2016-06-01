@@ -6,13 +6,13 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/27 16:47:34 by tiboitel          #+#    #+#             */
-/*   Updated: 2015/02/18 21:16:25 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/01 18:12:31 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
 
-t_stckelement *ft_stckpop(t_stack **stack)
+t_stckelement		*ft_stckpop(t_stack **stack)
 {
 	t_stckelement *elem;
 

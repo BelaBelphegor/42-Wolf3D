@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 18:36:42 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/05/31 16:40:55 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/01 17:33:09 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,28 +22,12 @@ t_wmap		*wolf3d_map_create(void)
 	return (map);
 }
 
-int			wolf3d_init_map(t_wmap *map, char *buffer)
+int			wolf3d_map_copy(t_wmap *map, char *buffer)
 {
-	int		i;
-	int		j;
-	int		k;
-	int		n;
+	int i;
+	int j;
+	int k;
 
-	i = 0;
-	n = 0;
-	if (!buffer || buffer[0] == 0)
-		return (-1);
-	if (!map || map == NULL)
-		return (-1);
-	while (buffer[i] != '\0')
-	{
-		if (buffer[i] == '\n')
-			n++;
-		i++;
-	}
-	if (!(map->map = (char **)ft_memalloc(sizeof(char *) * (n + 1))))
-		return (-1);
-	map->map[n] = NULL;
 	i = 0;
 	j = 0;
 	k = 0;
@@ -61,7 +45,30 @@ int			wolf3d_init_map(t_wmap *map, char *buffer)
 		i++;
 		k++;
 	}
-	i = 1;
+	return (1);
+}
+
+int			wolf3d_init_map(t_wmap *map, char *buffer)
+{
+	int		i;
+	int		n;
+
+	i = 0;
+	n = 0;
+	if (!buffer || buffer[0] == 0)
+		return (-1);
+	if (!map || map == NULL)
+		return (-1);
+	while (buffer[i] != '\0')
+	{
+		if (buffer[i] == '\n')
+			n++;
+		i++;
+	}
+	if (!(map->map = (char **)ft_memalloc(sizeof(char *) * (n + 1))))
+		return (-1);
+	map->map[n] = NULL;
+	wolf3d_map_copy(map, buffer);
 	return (1);
 }
 

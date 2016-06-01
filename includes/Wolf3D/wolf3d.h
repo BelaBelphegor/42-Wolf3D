@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 15:46:49 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/05/31 21:44:12 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/01 18:28:58 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,10 @@ void				wolf3d_map_destroy(t_wmap *map);
 int					wolf3d_init_graphics(t_wolf3d *wolf);
 void				wolf3d_close(t_wolf3d *wolf);
 void				wolf3d_destroy_graphics(t_wolf3d *wolf);
+void				wolf3d_raycaster(t_wolf3d *wolf);
 void				wolf3d_draw_raycaster(t_wolf3d *wolf, unsigned int x);
+void				wolf3d_raycaster_sidestep(t_wolf3d *wolf);
+void				wolf3d_raycaster_rayhit(t_wolf3d *wolf);
 void				wolf3d_render(t_wolf3d *wolf);
 void				wolf3d_update(t_wolf3d *wolf);
 #endif
