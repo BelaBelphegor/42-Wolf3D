@@ -6,13 +6,13 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 17:05:36 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/01 18:19:48 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/06 18:52:26 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <Wolf3D/wolf3d.h>
 
-int		wolf3d_init_graphics(t_wolf3d *wolf)
+int			wolf3d_init_graphics(t_wolf3d *wolf)
 {
 	unsigned int pixels[WINDW_H * WINDW_W];
 
@@ -41,7 +41,7 @@ int		wolf3d_init_graphics(t_wolf3d *wolf)
 	return (1);
 }
 
-void	wolf3d_draw_raycaster(t_wolf3d *wolf, unsigned int x)
+SDL_Color	wolf3d_choose_color(t_wolf3d *wolf)
 {
 	SDL_Color	color[4] = {
 		{108, 2, 119, 255},
@@ -50,11 +50,6 @@ void	wolf3d_draw_raycaster(t_wolf3d *wolf, unsigned int x)
 		{121, 28, 248, 255}
 	};
 	SDL_Color	tmp;
-	int			pitch;
-	int			a;
-	void		*upixels;
-	uint32_t	*dst;
-	SDL_Color	*ucolor;
 
 	tmp = color[(wolf->map->map[wolf->raycaster.mapx]
 		[wolf->raycaster.mapy]) - 48];
@@ -64,20 +59,31 @@ void	wolf3d_draw_raycaster(t_wolf3d *wolf, unsigned int x)
 		tmp.b = tmp.b / 2;
 		tmp.g = tmp.g / 2;
 	}
+	return (tmp);
+}
+
+void		wolf3d_draw_raycaster(t_wolf3d *wolf, unsigned int x)
+{
+	int			pitch;
+	int			a;
+	void		*upixels;
+	uint32_t	*dst;
+	SDL_Color	ucolor;
+
 	a = wolf->raycaster.drawstart;
 	if (SDL_LockTexture(wolf->texture, NULL, &upixels, &pitch) < 0)
 		ft_putstr_fd(SDL_GetError(), 2);
 	while (a++ < wolf->raycaster.drawend)
 	{
 		dst = (uint32_t *)((uint8_t *)upixels + a * pitch);
-		ucolor = &tmp;
-		*(dst + x - 1) = (0xFF000000 | (ucolor->r << 16) |
-			(ucolor->g << 8) | ucolor->b);
+		ucolor = wolf3d_choose_color(wolf);
+		*(dst + x - 1) = (0xFF000000 | (ucolor.r << 16) |
+			(ucolor.g << 8) | ucolor.b);
 	}
 	SDL_UnlockTexture(wolf->texture);
 }
 
-void	wolf3d_render(t_wolf3d *wolf)
+void		wolf3d_render(t_wolf3d *wolf)
 {
 	SDL_RenderClear(wolf->renderer);
 	SDL_RenderCopy(wolf->renderer, wolf->texture, NULL, NULL);
@@ -85,7 +91,7 @@ void	wolf3d_render(t_wolf3d *wolf)
 	wolf->frame = 0;
 }
 
-void	wolf3d_destroy_graphics(t_wolf3d *wolf)
+void		wolf3d_destroy_graphics(t_wolf3d *wolf)
 {
 	if (wolf && wolf->renderer)
 		SDL_DestroyRenderer(wolf->renderer);

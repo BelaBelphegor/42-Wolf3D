@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 15:46:49 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/01 18:28:58 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/06 21:15:20 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # define WINDW_H 1080
 # define SCREEN_FPS 60
 # define SCREEN_TICKS_PER_FRAME 1000 / SCREEN_FPS
+# define MOVE_SPEED_MODIFIER 5.0
+# define ROT_SPEED_MODIFIER 3.0
 
 typedef struct		s_wolf_raycaster
 {
@@ -60,6 +62,8 @@ typedef struct		s_wolf_player
 	double			y;
 	double			dirx;
 	double			diry;
+	double			movespeed;
+	double			rotspeed;
 }					t_wplayer;
 
 typedef struct 		s_wolf_m3d
@@ -77,6 +81,7 @@ typedef struct		s_wolf3d
 	t_wplayer		player;
 	t_wraycaster	raycaster;
 	SDL_Texture		*texture;
+	double			frametime;
 }					t_wolf3d;
 
 int					readfile(char *file, char *buffer);
@@ -95,4 +100,7 @@ void				wolf3d_raycaster_sidestep(t_wolf3d *wolf);
 void				wolf3d_raycaster_rayhit(t_wolf3d *wolf);
 void				wolf3d_render(t_wolf3d *wolf);
 void				wolf3d_update(t_wolf3d *wolf);
+double				wolf3d_player_get_movespeed(t_wolf3d *wolf);
+double				wolf3d_player_get_rotspeed(t_wolf3d *wolf);
+void				wolf3d_inputs(const unsigned char *keystate, t_wolf3d *wolf);
 #endif

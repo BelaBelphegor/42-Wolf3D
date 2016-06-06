@@ -6,7 +6,8 @@ SRCS		= main.c \
 			  reader.c \
 			  load.c \
 			  graphic.c \
-			  raytracer.c 
+			  raytracer.c \
+			  player.c
 SRCSPATH	= ./srcs/
 INCLUDES	= ./includes
 CC			= clang
