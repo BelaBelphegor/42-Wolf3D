@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 17:05:36 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/06 18:52:26 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/07 21:28:57 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,15 @@ SDL_Color	wolf3d_choose_color(t_wolf3d *wolf)
 	SDL_Color	tmp;
 
 	tmp = color[(wolf->map->map[wolf->raycaster.mapx]
-		[wolf->raycaster.mapy]) - 48];
-	if (wolf->raycaster.side == 1)
-	{
-		tmp.r = tmp.r / 2;
-		tmp.b = tmp.b / 2;
-		tmp.g = tmp.g / 2;
-	}
+		[wolf->raycaster.mapy]) - 49];
+	if (wolf->raycaster.side > 0 && wolf->raycaster.raydiry > 0)
+		tmp = color[0];
+	else if (wolf->raycaster.side > 0 && wolf->raycaster.raydiry < 0)
+		tmp = color[1];
+	else if (wolf->raycaster.side == 0 && wolf->raycaster.raydirx > 0)
+		tmp = color [2];
+	else if (wolf->raycaster.side == 0 && wolf->raycaster.raydirx < 0)
+		tmp = color [3];
 	return (tmp);
 }
 
@@ -85,10 +87,15 @@ void		wolf3d_draw_raycaster(t_wolf3d *wolf, unsigned int x)
 
 void		wolf3d_render(t_wolf3d *wolf)
 {
-	SDL_RenderClear(wolf->renderer);
+	unsigned int pixels[WINDW_H * WINDW_W];
+
+	SDL_RenderClear(wolf->renderer);	
 	SDL_RenderCopy(wolf->renderer, wolf->texture, NULL, NULL);
 	SDL_RenderPresent(wolf->renderer);
 	wolf->frame = 0;
+	memset(pixels, 0x00000000, WINDW_H * WINDW_W * sizeof(unsigned int));
+	SDL_UpdateTexture(wolf->texture, NULL, pixels, WINDW_H *
+			sizeof(unsigned int));
 }
 
 void		wolf3d_destroy_graphics(t_wolf3d *wolf)
