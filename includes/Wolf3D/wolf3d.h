@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 15:46:49 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/08 19:47:28 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/08 20:11:13 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define SCREEN_TICKS_PER_FRAME 1000 / SCREEN_FPS
 # define MOVE_SPEED_MODIFIER 5.0
 # define ROT_SPEED_MODIFIER 3.0
+# define MUSIC_LOOP "audio/duke_nukem_theme.wav"
 
 typedef struct		s_wolf_raycaster
 {
@@ -112,4 +113,15 @@ void				wolf3d_update(t_wolf3d *wolf);
 double				wolf3d_player_get_movespeed(t_wolf3d *wolf);
 double				wolf3d_player_get_rotspeed(t_wolf3d *wolf);
 void				wolf3d_inputs(const unsigned char *keystate, t_wolf3d *wolf);
+/*
+ *
+ * Bonus Audio
+ *
+ */
+
+void				wolf3d_audio_init(void);
+t_wwav				*wolf_audio_handler(void);
+void				wolf3d_audio_callback(void *userdata, unsigned char *stream,
+	int length);
+void				wolf_audio_handler_release(void);
 #endif

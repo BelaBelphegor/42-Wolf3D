@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 17:04:46 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/07 21:30:39 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/08 20:10:41 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ void		wolf3d_update(t_wolf3d *wolf)
 
 void		wolf3d_close(t_wolf3d *wolf)
 {
+	wolf_audio_handler_release();
 	if (wolf->map)
 		wolf3d_map_destroy(wolf->map);
 	if (wolf)
