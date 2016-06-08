@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 17:05:36 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/07 21:28:57 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/08 18:45:09 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int			wolf3d_init_graphics(t_wolf3d *wolf)
 {
 	unsigned int pixels[WINDW_H * WINDW_W];
 
-	if (SDL_Init(SDL_INIT_VIDEO != 0))
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0)
 	{
 		ft_putstr_fd(SDL_GetError(), 2);
 		return (-1);
@@ -93,7 +93,7 @@ void		wolf3d_render(t_wolf3d *wolf)
 	SDL_RenderCopy(wolf->renderer, wolf->texture, NULL, NULL);
 	SDL_RenderPresent(wolf->renderer);
 	wolf->frame = 0;
-	memset(pixels, 0x00000000, WINDW_H * WINDW_W * sizeof(unsigned int));
+	memset(pixels, 0xFF000000, WINDW_H * WINDW_W * sizeof(unsigned int));
 	SDL_UpdateTexture(wolf->texture, NULL, pixels, WINDW_H *
 			sizeof(unsigned int));
 }

@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 15:46:49 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/07 20:01:23 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/08 19:47:28 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,15 @@ typedef struct 		s_wolf_m3d
 {
 	char			**map;
 }					t_wmap;			
+
+typedef struct		s_wolf_wav
+{
+	unsigned char	*audio_pos;
+	unsigned int	audio_len;
+	unsigned int	wav_length;
+	unsigned char	*wav_buffer;
+	SDL_AudioSpec	wav_spec;
+}					t_wwav;
 
 typedef struct		s_wolf3d
 {
