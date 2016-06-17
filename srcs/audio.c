@@ -2,7 +2,7 @@
 
 int		wolf3d_audio_init(t_wolf3d *wolf)
 {
-	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
+	if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 8096) == -1)
 		return (-1);
 	wolf->music = Mix_LoadWAV(MUSIC_LOOP);
 	if (wolf->music == NULL)
