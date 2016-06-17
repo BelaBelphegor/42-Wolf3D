@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 15:46:49 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/08 20:11:13 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/17 18:48:18 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FT_WOLF3D_H
 
 #include <SDL2/SDL.h>
+#include <SDL_mixer.h>
 #include <libft.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -65,21 +66,13 @@ typedef struct		s_wolf_player
 	double			diry;
 	double			movespeed;
 	double			rotspeed;
+	char			isrunning;
 }					t_wplayer;
 
 typedef struct 		s_wolf_m3d
 {
 	char			**map;
 }					t_wmap;			
-
-typedef struct		s_wolf_wav
-{
-	unsigned char	*audio_pos;
-	unsigned int	audio_len;
-	unsigned int	wav_length;
-	unsigned char	*wav_buffer;
-	SDL_AudioSpec	wav_spec;
-}					t_wwav;
 
 typedef struct		s_wolf3d
 {
@@ -90,6 +83,7 @@ typedef struct		s_wolf3d
 	t_wplayer		player;
 	t_wraycaster	raycaster;
 	SDL_Texture		*texture;
+	Mix_Chunk		*music;	
 	double			frametime;
 	char			quit;
 }					t_wolf3d;
@@ -119,9 +113,6 @@ void				wolf3d_inputs(const unsigned char *keystate, t_wolf3d *wolf);
  *
  */
 
-void				wolf3d_audio_init(void);
-t_wwav				*wolf_audio_handler(void);
-void				wolf3d_audio_callback(void *userdata, unsigned char *stream,
-	int length);
-void				wolf_audio_handler_release(void);
+int					wolf3d_audio_init(t_wolf3d *wolf);
+void				wolf3d_audio_release(t_wolf3d *wolf);
 #endif

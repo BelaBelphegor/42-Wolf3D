@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 17:04:46 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/08 20:10:41 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/17 18:53:05 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,9 @@ void		wolf3d_core(t_wolf3d *wolf)
 	wolf->quit = 1;
 	keystate = NULL;
 	keystate = (Uint8 *)SDL_GetKeyboardState(NULL);
+	if (!keystate)
+		return ;
+
 	while (wolf->quit)
 	{
 		while (SDL_PollEvent(&e))
@@ -138,7 +141,7 @@ void		wolf3d_update(t_wolf3d *wolf)
 
 void		wolf3d_close(t_wolf3d *wolf)
 {
-	wolf_audio_handler_release();
+	wolf3d_audio_release(wolf);
 	if (wolf->map)
 		wolf3d_map_destroy(wolf->map);
 	if (wolf)

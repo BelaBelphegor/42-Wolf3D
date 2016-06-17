@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 16:56:51 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/08 20:08:08 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/17 18:55:46 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int		wolf3d_loader(t_wolf3d *wolf)
 		ft_putstr_fd("Unable to load intro.m3d into memory. \
 			Programme going to quit\n", 2);
 	}
-	wolf3d_audio_init();
+	if (wolf3d_audio_init(wolf) == -1)
+		return (-1);
 	return (1);
 }
