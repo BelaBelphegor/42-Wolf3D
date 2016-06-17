@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 17:04:46 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/17 19:47:34 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/17 23:06:31 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ void		wolf3d_inputs(const unsigned char *keystate, t_wolf3d *wolf)
 		wolf->raycaster.planey = oldplanex * sin(wolf3d_player_get_rotspeed(wolf)) +
 			wolf->raycaster.planey * cos(wolf3d_player_get_rotspeed(wolf));
 	}
+	wolf->player.isrunning = keystate[SDL_SCANCODE_SPACE];
 }
 
 void		wolf3d_update(t_wolf3d *wolf)
@@ -141,7 +142,8 @@ void		wolf3d_update(t_wolf3d *wolf)
 
 void		wolf3d_close(t_wolf3d *wolf)
 {
-	wolf3d_audio_release(wolf);
+	if (wolf->music)
+		wolf3d_audio_release(wolf);
 	if (wolf->map)
 		wolf3d_map_destroy(wolf->map);
 	if (wolf)

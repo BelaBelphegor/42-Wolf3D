@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 15:46:49 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/17 18:48:18 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/17 21:24:05 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct		s_wolf3d
 	t_wplayer		player;
 	t_wraycaster	raycaster;
 	SDL_Texture		*texture;
+	SDL_Texture		*skybox;
 	Mix_Chunk		*music;	
 	double			frametime;
 	char			quit;

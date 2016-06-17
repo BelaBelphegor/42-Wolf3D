@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 17:05:36 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/08 18:45:09 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/17 23:06:29 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,10 @@ void		wolf3d_render(t_wolf3d *wolf)
 {
 	unsigned int pixels[WINDW_H * WINDW_W];
 
-	SDL_RenderClear(wolf->renderer);	
-	SDL_RenderCopy(wolf->renderer, wolf->texture, NULL, NULL);
-	SDL_RenderPresent(wolf->renderer);
+	SDL_RenderClear(wolf->renderer);		
+	SDL_RenderCopy(wolf->renderer, wolf->skybox, NULL, NULL);	
+	SDL_RenderCopy(wolf->renderer, wolf->texture, NULL, NULL);	
+	SDL_RenderPresent(wolf->renderer);	
 	wolf->frame = 0;
 	memset(pixels, 0xFF000000, WINDW_H * WINDW_W * sizeof(unsigned int));
 	SDL_UpdateTexture(wolf->texture, NULL, pixels, WINDW_H *

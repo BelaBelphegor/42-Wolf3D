@@ -6,13 +6,25 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 16:56:51 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/17 19:46:50 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/17 21:30:00 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <Wolf3D/wolf3d.h>
 
-int		wolf3d_loader(t_wolf3d *wolf)
+static int		wolf3d_load_skybox(t_wolf3d *wolf)
+{
+	SDL_Surface		*skybox_bmp;
+
+	skybox_bmp = SDL_LoadBMP("img/skybox.bmp");
+	if (skybox_bmp == NULL)
+		return (-1);
+	wolf->skybox = SDL_CreateTextureFromSurface(wolf->renderer, skybox_bmp);
+	SDL_FreeSurface(skybox_bmp);
+	return (1);
+}
+
+int			wolf3d_loader(t_wolf3d *wolf)
 {
 	char	buffer[1024];
 
@@ -29,5 +41,6 @@ int		wolf3d_loader(t_wolf3d *wolf)
 	}
 	if (wolf3d_audio_init(wolf) == -1)
 		return (-1);
+	wolf3d_load_skybox(wolf);
 	return (1);
 }
