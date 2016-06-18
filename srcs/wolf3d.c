@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 17:04:46 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/17 23:06:31 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/18 21:04:00 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,22 @@ void		wolf3d_core(t_wolf3d *wolf)
 		{
 			if (e.type == SDL_QUIT)
 				wolf->quit = 0;
+			else if (e.type == SDL_MOUSEMOTION)
+			{
+				SDL_GetMouseState(&(wolf->mousex), &(wolf->mousey));
+				wolf->mousex /= 2;
+				wolf->mousey /= 2;
+				printf("%f old player.dirx\n", wolf->player.dirx);
+				wolf->player.dirx = cos((360 - (wolf->mousex * 360 / WINDW_W)) * 3.14 / 180) * cos(-wolf3d_player_get_rotspeed(wolf)) - wolf->player.diry * sin(-wolf3d_player_get_rotspeed(wolf));
+
+				printf("%f player.dirx\n", wolf->player.dirx);
+				wolf->player.diry = sin((360 - (wolf->mousey * 360 / WINDW_W)) * 3.14 / 180);
+				wolf->raycaster.planex = 0.66 * wolf->player.diry;
+				wolf->raycaster.planey = -0.66 * wolf->player.dirx;
+			}
 		}
 		wolf3d_inputs(keystate, wolf);
-		wolf3d_update(wolf);
+		wolf3d_update(wolf);	
 	}
 }
 
@@ -70,29 +83,29 @@ void		wolf3d_inputs(const unsigned char *keystate, t_wolf3d *wolf)
 		wolf->quit = 0;
 	if (keystate[SDL_SCANCODE_UP])
 	{
-			x = (int)(wolf->player.x + wolf->player.dirx
-					* wolf3d_player_get_movespeed(wolf));
-			y = (int)(wolf->player.y);
-			if (x && y && wolf->map->map[x][y] && wolf->map->map[x][y] == '0')
-				wolf->player.x += wolf->player.dirx * wolf3d_player_get_movespeed(wolf);
-			x = (int)(wolf->player.x);	
-			y = (int)(wolf->player.y + wolf->player.diry
-					* wolf3d_player_get_movespeed(wolf));
-			if (x && y && wolf->map->map[x][y] == '0')
-				wolf->player.y += wolf->player.diry * wolf3d_player_get_movespeed(wolf);	
+		x = (int)(wolf->player.x + wolf->player.dirx
+				* wolf3d_player_get_movespeed(wolf));
+		y = (int)(wolf->player.y);
+		if (x && y && wolf->map->map[x][y] && wolf->map->map[x][y] == '0')
+			wolf->player.x += wolf->player.dirx * wolf3d_player_get_movespeed(wolf);
+		x = (int)(wolf->player.x);	
+		y = (int)(wolf->player.y + wolf->player.diry
+				* wolf3d_player_get_movespeed(wolf));
+		if (x && y && wolf->map->map[x][y] == '0')
+			wolf->player.y += wolf->player.diry * wolf3d_player_get_movespeed(wolf);	
 	}
 	if (keystate[SDL_SCANCODE_DOWN])
 	{
-			x = (int)(wolf->player.x - wolf->player.dirx
-					* wolf3d_player_get_movespeed(wolf));
-			y = (int)(wolf->player.y);
-			if (x && y && wolf->map->map[x][y] && wolf->map->map[x][y] == '0')
-				wolf->player.x -= wolf->player.dirx * wolf3d_player_get_movespeed(wolf);
-			x = (int)(wolf->player.x);	
-			y = (int)(wolf->player.y - wolf->player.diry
-					* wolf3d_player_get_movespeed(wolf));
-			if (x && y && wolf->map->map[x][y] == '0')
-				wolf->player.y -= wolf->player.diry * wolf3d_player_get_movespeed(wolf);	
+		x = (int)(wolf->player.x - wolf->player.dirx
+				* wolf3d_player_get_movespeed(wolf));
+		y = (int)(wolf->player.y);
+		if (x && y && wolf->map->map[x][y] && wolf->map->map[x][y] == '0')
+			wolf->player.x -= wolf->player.dirx * wolf3d_player_get_movespeed(wolf);
+		x = (int)(wolf->player.x);	
+		y = (int)(wolf->player.y - wolf->player.diry
+				* wolf3d_player_get_movespeed(wolf));
+		if (x && y && wolf->map->map[x][y] == '0')
+			wolf->player.y -= wolf->player.diry * wolf3d_player_get_movespeed(wolf);	
 	}
 	if (keystate[SDL_SCANCODE_RIGHT])
 	{

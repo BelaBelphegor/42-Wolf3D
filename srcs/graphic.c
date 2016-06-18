@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 17:05:36 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/17 23:06:29 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/18 21:04:02 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int			wolf3d_init_graphics(t_wolf3d *wolf)
 	}
 	wolf->texture = SDL_CreateTexture(wolf->renderer, SDL_PIXELFORMAT_ARGB8888,
 			SDL_TEXTUREACCESS_STREAMING, WINDW_W, WINDW_H);
-	memset(pixels, 0x00FFFFFF, WINDW_H * WINDW_W * sizeof(unsigned int));
+	memset(pixels, 0xFFFFFFFF, WINDW_H * WINDW_W * sizeof(unsigned int));
 	SDL_UpdateTexture(wolf->texture, NULL, pixels, WINDW_H *
 			sizeof(unsigned int));
 	SDL_SetRenderDrawColor(wolf->renderer, 0, 0, 0, 0);
@@ -87,16 +87,35 @@ void		wolf3d_draw_raycaster(t_wolf3d *wolf, unsigned int x)
 
 void		wolf3d_render(t_wolf3d *wolf)
 {
-	unsigned int pixels[WINDW_H * WINDW_W];
+	unsigned int	pixels[WINDW_H * WINDW_W];
+	SDL_Rect 		dstrec;
+	SDL_Rect		srcrec;
 
-	SDL_RenderClear(wolf->renderer);		
-	SDL_RenderCopy(wolf->renderer, wolf->skybox, NULL, NULL);	
-	SDL_RenderCopy(wolf->renderer, wolf->texture, NULL, NULL);	
+	SDL_RenderClear(wolf->renderer);
+	if (wolf->mousex < 0)
+		wolf->mousex += WINDW_W;
+	srcrec.x = ((wolf->mousex < WINDW_W / 2) ? ((acos(wolf->player.dirx) * 180 / 3.14)) :
+			(360 - (acos(wolf->player.dirx) * 180 / 3.14))) * (WINDW_W / 360);
+	if (srcrec.x > WINDW_W)
+		srcrec.x = 1680 - WINDW_W;
+	if (srcrec.x < 0)
+		srcrec.x = 0;
+	printf("%d\n", srcrec.x);
+	srcrec.y = 0;
+	srcrec.w = WINDW_W - (1680 % 180);
+	srcrec.h = 1050;
+	dstrec.x = 0;
+	dstrec.y = -WINDW_H / 2 - 75;
+	dstrec.h = 1050;
+	dstrec.w = 1680;
+	SDL_RenderCopy(wolf->renderer, wolf->skybox, &srcrec, &dstrec);	
+	SDL_SetTextureBlendMode(wolf->texture, SDL_BLENDMODE_BLEND);
+	SDL_RenderCopy(wolf->renderer, wolf->texture, NULL, NULL);
 	SDL_RenderPresent(wolf->renderer);	
 	wolf->frame = 0;
 	memset(pixels, 0xFF000000, WINDW_H * WINDW_W * sizeof(unsigned int));
 	SDL_UpdateTexture(wolf->texture, NULL, pixels, WINDW_H *
-			sizeof(unsigned int));
+			sizeof(unsigned int));	
 }
 
 void		wolf3d_destroy_graphics(t_wolf3d *wolf)
@@ -106,6 +125,7 @@ void		wolf3d_destroy_graphics(t_wolf3d *wolf)
 	if (wolf && wolf->pWindow)
 		SDL_DestroyWindow(wolf->pWindow);
 	SDL_DestroyTexture(wolf->texture);
+	SDL_DestroyTexture(wolf->skybox);
 	wolf->pWindow = NULL;
 	wolf->renderer = NULL;
 }

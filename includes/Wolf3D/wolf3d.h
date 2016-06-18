@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 15:46:49 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/17 21:24:05 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/18 19:25:00 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 #include <stdio.h>
 #include <math.h>
 # define DESIRED_FRAME 60
-# define WINDW_W 1680 
-# define WINDW_H 1080
+# define WINDW_W 1680
+# define WINDW_H 960
 # define SCREEN_FPS 60
 # define SCREEN_TICKS_PER_FRAME 1000 / SCREEN_FPS
 # define MOVE_SPEED_MODIFIER 5.0
@@ -87,6 +87,8 @@ typedef struct		s_wolf3d
 	Mix_Chunk		*music;	
 	double			frametime;
 	char			quit;
+	int				mousex;
+	int				mousey;
 }					t_wolf3d;
 
 int					readfile(char *file, char *buffer);
