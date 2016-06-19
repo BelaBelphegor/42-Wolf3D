@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 17:04:46 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/18 21:04:00 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/19 22:55:41 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,18 @@ void		wolf3d_core(t_wolf3d *wolf)
 			else if (e.type == SDL_MOUSEMOTION)
 			{
 				SDL_GetMouseState(&(wolf->mousex), &(wolf->mousey));
-				wolf->mousex /= 2;
-				wolf->mousey /= 2;
+				if (wolf->mousex > WINDW_W)
+					wolf->mousex %= WINDW_W;
+				if (wolf->mousex < 0)
+					wolf->mousex += WINDW_W;
+				printf("Angle RX: (%f)\n", (double)(360 - (wolf->mousex * 360 / WINDW_W)));
 				printf("%f old player.dirx\n", wolf->player.dirx);
-				wolf->player.dirx = cos((360 - (wolf->mousex * 360 / WINDW_W)) * 3.14 / 180) * cos(-wolf3d_player_get_rotspeed(wolf)) - wolf->player.diry * sin(-wolf3d_player_get_rotspeed(wolf));
-
+				wolf->player.dirx = cos((360 - (wolf->mousex * 360 / WINDW_W)) * 3.14 / 180);
 				printf("%f player.dirx\n", wolf->player.dirx);
-				wolf->player.diry = sin((360 - (wolf->mousey * 360 / WINDW_W)) * 3.14 / 180);
-				wolf->raycaster.planex = 0.66 * wolf->player.diry;
+				printf("%f old player.diry\n", wolf->player.diry);
+				wolf->player.diry = sin((360 - (wolf->mousex * 360 / WINDW_W)) * 3.14 / 180);
+				printf("%f player.diry\n", wolf->player.diry);
+				wolf->raycaster.planex = 0.33 * wolf->player.diry;
 				wolf->raycaster.planey = -0.66 * wolf->player.dirx;
 			}
 		}

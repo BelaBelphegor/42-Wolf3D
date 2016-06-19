@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 17:05:36 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/18 21:04:02 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/19 22:54:50 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,15 +92,10 @@ void		wolf3d_render(t_wolf3d *wolf)
 	SDL_Rect		srcrec;
 
 	SDL_RenderClear(wolf->renderer);
-	if (wolf->mousex < 0)
-		wolf->mousex += WINDW_W;
 	srcrec.x = ((wolf->mousex < WINDW_W / 2) ? ((acos(wolf->player.dirx) * 180 / 3.14)) :
 			(360 - (acos(wolf->player.dirx) * 180 / 3.14))) * (WINDW_W / 360);
-	if (srcrec.x > WINDW_W)
-		srcrec.x = 1680 - WINDW_W;
 	if (srcrec.x < 0)
 		srcrec.x = 0;
-	printf("%d\n", srcrec.x);
 	srcrec.y = 0;
 	srcrec.w = WINDW_W - (1680 % 180);
 	srcrec.h = 1050;

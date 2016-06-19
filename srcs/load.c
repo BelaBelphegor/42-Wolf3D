@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 16:56:51 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/18 17:47:39 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/19 22:34:38 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int			wolf3d_loader(t_wolf3d *wolf)
 	char	buffer[1024];
 
 	ft_bzero(buffer, 1024);
-	if (readfile("maps/intro.m3d", buffer) == -1)
+	if (readfile("maps/wall.m3d", buffer) == -1)
 	{
 		ft_putstr_fd("Unable to read intro.m3d. Programme going to quit.\n", 2);
 		return (-1);
