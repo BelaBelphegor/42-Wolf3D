@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 17:04:46 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/19 22:55:41 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/20 19:11:03 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,17 @@ void		wolf3d_core(t_wolf3d *wolf)
 					wolf->mousex %= WINDW_W;
 				if (wolf->mousex < 0)
 					wolf->mousex += WINDW_W;
+				double		anglerx;
+				
 				printf("Angle RX: (%f)\n", (double)(360 - (wolf->mousex * 360 / WINDW_W)));
+				anglerx = (double)(360 - (wolf->mousex * 360 / WINDW_W));  
+				if (anglerx == 360)
+					anglerx /= 360;
 				printf("%f old player.dirx\n", wolf->player.dirx);
-				wolf->player.dirx = cos((360 - (wolf->mousex * 360 / WINDW_W)) * 3.14 / 180);
+				wolf->player.dirx = cos(anglerx * 3.14 / 180);
 				printf("%f player.dirx\n", wolf->player.dirx);
 				printf("%f old player.diry\n", wolf->player.diry);
-				wolf->player.diry = sin((360 - (wolf->mousex * 360 / WINDW_W)) * 3.14 / 180);
+				wolf->player.diry = sin(anglerx * 3.14 / 180);
 				printf("%f player.diry\n", wolf->player.diry);
 				wolf->raycaster.planex = 0.33 * wolf->player.diry;
 				wolf->raycaster.planey = -0.66 * wolf->player.dirx;
@@ -168,4 +173,6 @@ void		wolf3d_close(t_wolf3d *wolf)
 	free(wolf);
 	wolf = NULL;
 	SDL_Quit();
+	while (1)
+		;
 }

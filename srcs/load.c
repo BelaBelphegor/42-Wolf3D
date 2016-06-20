@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 16:56:51 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/19 22:34:38 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/20 18:52:43 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static int		wolf3d_load_skybox(t_wolf3d *wolf)
 		return (-1);
 	wolf->skybox = SDL_CreateTextureFromSurface(wolf->renderer, skybox_bmp);
 	SDL_FreeSurface(skybox_bmp);
+	skybox_bmp = NULL;
 	return (1);
 }
 
