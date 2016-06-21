@@ -14,8 +14,7 @@ int		wolf3d_audio_init(t_wolf3d *wolf)
 
 void	wolf3d_audio_release(t_wolf3d *wolf)
 {
-	if (wolf->music == NULL)
-		return ;
 	Mix_FreeChunk(wolf->music);
+	wolf->music = NULL;
 	Mix_CloseAudio();
 }

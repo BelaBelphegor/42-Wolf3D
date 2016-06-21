@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 17:04:46 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/20 19:11:03 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/21 00:29:09 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ t_wolf3d	*wolf3d_create(void)
 	wolf->renderer = NULL;
 	wolf->frame = 0;
 	wolf->map = NULL;
+	wolf->music = NULL;
+	wolf->skybox = NULL;
+	wolf->texture = NULL;
 	wolf->map = wolf3d_map_create();
 	return (wolf);
 }
@@ -42,8 +45,6 @@ void		wolf3d_core(t_wolf3d *wolf)
 	wolf->quit = 1;
 	keystate = NULL;
 	keystate = (Uint8 *)SDL_GetKeyboardState(NULL);
-	if (!keystate)
-		return ;
 
 	while (wolf->quit)
 	{
@@ -164,15 +165,11 @@ void		wolf3d_update(t_wolf3d *wolf)
 
 void		wolf3d_close(t_wolf3d *wolf)
 {
-	if (wolf->music)
-		wolf3d_audio_release(wolf);
-	if (wolf->map)
-		wolf3d_map_destroy(wolf->map);
-	if (wolf)
-		wolf3d_destroy_graphics(wolf);
+	wolf3d_audio_release(wolf);
+	wolf3d_map_destroy(wolf->map);
+	wolf->map = NULL;
+	wolf3d_destroy_graphics(wolf);
+	SDL_Quit();
 	free(wolf);
 	wolf = NULL;
-	SDL_Quit();
-	while (1)
-		;
 }

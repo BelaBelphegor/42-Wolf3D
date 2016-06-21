@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 18:36:42 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/01 17:33:09 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/20 23:47:19 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,17 +83,15 @@ void		wolf3d_map_destroy(t_wmap *map)
 	int		i;
 
 	i = 0;
-	if (map != NULL)
+	while (map->map[i])
 	{
-		while (map->map && map->map[i] != NULL)
-		{
-			free(map->map[i]);
-			map->map[i] = NULL;
-			i++;
-		}
-		free(map->map);
-		map->map = NULL;
-		free(map);
-		map = NULL;
+		free(map->map[i]);
+		map->map[i] = NULL;
+		i++;
 	}
+	free(map->map[i]);
+	free(map->map);
+	map->map = NULL;
+	free(map);
+	map = NULL;
 }

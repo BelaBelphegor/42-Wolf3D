@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 17:05:36 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/20 18:53:42 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/21 00:29:25 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int			wolf3d_init_graphics(t_wolf3d *wolf)
 		return (-1);
 	}
 	wolf->texture = SDL_CreateTexture(wolf->renderer, SDL_PIXELFORMAT_ARGB8888,
-			SDL_TEXTUREACCESS_STREAMING, WINDW_W, WINDW_H);
-	memset(pixels, 0xFFFFFFFF, WINDW_H * WINDW_W * sizeof(unsigned int));
+						SDL_TEXTUREACCESS_STREAMING, WINDW_W, WINDW_H);
+	memset(pixels, 0xFFFFFFFF, WINDW_H * WINDW_W - 1);
 	SDL_UpdateTexture(wolf->texture, NULL, pixels, WINDW_H *
 			sizeof(unsigned int));
 	SDL_SetRenderDrawColor(wolf->renderer, 0, 0, 0, 0);
@@ -115,12 +115,12 @@ void		wolf3d_render(t_wolf3d *wolf)
 
 void		wolf3d_destroy_graphics(t_wolf3d *wolf)
 {
-	if (wolf && wolf->renderer)
-		SDL_DestroyRenderer(wolf->renderer);
-	if (wolf && wolf->pWindow)
-		SDL_DestroyWindow(wolf->pWindow);
-	SDL_DestroyTexture(wolf->texture);
 	SDL_DestroyTexture(wolf->skybox);
+	SDL_DestroyTexture(wolf->texture);
+	wolf->skybox = NULL;
+	wolf->texture = NULL;
+	SDL_DestroyRenderer(wolf->renderer);
+	SDL_DestroyWindow(wolf->pWindow);
 	wolf->pWindow = NULL;
 	wolf->renderer = NULL;
 }
