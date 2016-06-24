@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 16:56:51 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/21 00:06:47 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/24 05:35:45 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,16 @@ static int		wolf3d_load_skybox(t_wolf3d *wolf)
 	return (1);
 }
 
-int			wolf3d_loader(t_wolf3d *wolf)
+int			wolf3d_load_map(t_wolf3d *wolf, char *path)
 {
 	char	buffer[1024];
-
+	
+	if (path == NULL || !path[0])
+		return (-1);
 	ft_bzero(buffer, 1024);
-	if (readfile("maps/wall.m3d", buffer) == -1)
+	if (wolf->map->map != NULL)
+		wolf3d_map_destroy(wolf->map);
+	if (readfile(path, buffer) == -1)
 	{
 		ft_putstr_fd("Unable to read intro.m3d. Programme going to quit.\n", 2);
 		return (-1);
@@ -41,7 +45,13 @@ int			wolf3d_loader(t_wolf3d *wolf)
 		ft_putstr_fd("Unable to load intro.m3d into memory. \
 			Programme going to quit\n", 2);
 	}
-	if (wolf3d_audio_init(wolf) == -1)
+	return (1);
+}
+
+int			wolf3d_loader(t_wolf3d *wolf)
+{
+	wolf3d_load_map(wolf, "intro.m3d");
+		if (wolf3d_audio_init(wolf) == -1)
 		return (-1);
 	if (wolf3d_load_skybox(wolf) == -1)
 		return (-1);

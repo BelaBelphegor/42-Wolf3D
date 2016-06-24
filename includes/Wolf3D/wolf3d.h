@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 15:46:49 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/18 19:25:00 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/24 05:14:06 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <math.h>
+#include <dirent.h>
 # define DESIRED_FRAME 60
 # define WINDW_W 1680
 # define WINDW_H 960
@@ -72,6 +73,7 @@ typedef struct		s_wolf_player
 typedef struct 		s_wolf_m3d
 {
 	char			**map;
+	char			name[1024];
 }					t_wmap;			
 
 typedef struct		s_wolf3d
@@ -95,6 +97,7 @@ int					readfile(char *file, char *buffer);
 t_wolf3d			*wolf3d_create(void);
 t_wmap				*wolf3d_map_create(void);
 int					wolf3d_loader(t_wolf3d *wolf);
+int					wolf3d_load_map(t_wolf3d *wolf3d, char *path);
 void				wolf3d_core(t_wolf3d *wolf);
 int					wolf3d_init_map(t_wmap *map, char *buffer);
 void				wolf3d_map_destroy(t_wmap *map);
