@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 16:56:51 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/24 05:35:45 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/24 05:47:12 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ int			wolf3d_load_map(t_wolf3d *wolf, char *path)
 
 int			wolf3d_loader(t_wolf3d *wolf)
 {
-	wolf3d_load_map(wolf, "intro.m3d");
-		if (wolf3d_audio_init(wolf) == -1)
+	wolf3d_load_map(wolf, "maps/intro.m3d");
+	if (wolf3d_audio_init(wolf) == -1)
 		return (-1);
 	if (wolf3d_load_skybox(wolf) == -1)
 		return (-1);
