@@ -6,24 +6,24 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 15:46:49 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/24 21:20:10 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/25 04:07:17 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_WOLF3D_H
 # define FT_WOLF3D_H
 
-#include <SDL2/SDL.h>
-#include <SDL_mixer.h>
-#include <libft.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <string.h>
-#include <stdio.h>
-#include <math.h>
-#include <dirent.h>
+# include <SDL2/SDL.h>
+# include <SDL_mixer.h>
+# include <libft.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <fcntl.h>
+# include <errno.h>
+# include <string.h>
+# include <stdio.h>
+# include <math.h>
+# include <dirent.h>
 # define DESIRED_FRAME 60
 # define WINDW_W 1680
 # define WINDW_H 960
@@ -53,7 +53,6 @@ typedef struct		s_wolf_raycaster
 	int				stepy;
 	int				hit;
 	int				side;
-	// render
 	int				lineheight;
 	int				drawstart;
 	int				drawend;
@@ -70,15 +69,15 @@ typedef struct		s_wolf_player
 	char			isrunning;
 }					t_wplayer;
 
-typedef struct 		s_wolf_m3d
+typedef struct		s_wolf_m3d
 {
 	char			**map;
 	char			name[1024];
-}					t_wmap;			
+}					t_wmap;
 
 typedef struct		s_wolf3d
 {
-	SDL_Window		*pWindow;
+	SDL_Window		*pwindow;
 	SDL_Renderer	*renderer;
 	int				frame;
 	t_wmap			*map;
@@ -86,7 +85,7 @@ typedef struct		s_wolf3d
 	t_wraycaster	raycaster;
 	SDL_Texture		*texture;
 	SDL_Texture		*skybox;
-	Mix_Chunk		*music;	
+	Mix_Chunk		*music;
 	double			frametime;
 	char			quit;
 	int				mousex;
@@ -113,13 +112,8 @@ void				wolf3d_render(t_wolf3d *wolf);
 void				wolf3d_update(t_wolf3d *wolf);
 double				wolf3d_player_get_movespeed(t_wolf3d *wolf);
 double				wolf3d_player_get_rotspeed(t_wolf3d *wolf);
-void				wolf3d_inputs(const unsigned char *keystate, t_wolf3d *wolf);
-/*
- *
- * Bonus Audio
- *
- */
-
+void				wolf3d_inputs(const unsigned char *keystate,
+		t_wolf3d *wolf);
 int					wolf3d_audio_init(t_wolf3d *wolf);
 void				wolf3d_audio_release(t_wolf3d *wolf);
 #endif

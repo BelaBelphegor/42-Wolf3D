@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 17:05:36 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/25 02:42:32 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/25 03:26:24 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int			wolf3d_init_graphics(t_wolf3d *wolf)
 {
-
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
 	{
 		ft_putstr_fd(SDL_GetError(), 2);

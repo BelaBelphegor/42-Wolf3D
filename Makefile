@@ -8,7 +8,8 @@ SRCS				= main.c \
 			  		  graphic.c \
 			 		  raytracer.c \
 		  			  player.c \
-					  audio.c
+					  audio.c \
+					  inputs.c
 SRCSPATH			= ./srcs/
 INCLUDES			= ./includes
 CC					= clang

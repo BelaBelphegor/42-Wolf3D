@@ -6,11 +6,29 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 17:04:46 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/25 02:02:55 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/25 04:03:25 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <Wolf3D/wolf3d.h>
+
+static void	wolf3d_handle_mouse(t_wolf3d *wolf)
+{
+	double				anglerx;
+
+	SDL_GetMouseState(&(wolf->mousex), &(wolf->mousey));
+	if (wolf->mousex > WINDW_W)
+		wolf->mousex %= WINDW_W;
+	if (wolf->mousex < 0)
+		wolf->mousex += WINDW_W;
+	anglerx = (double)(360 - (wolf->mousex * 360 / WINDW_W));
+	if (anglerx == 360)
+		anglerx /= 360;
+	wolf->player.dirx = cos(anglerx * 3.14 / 180);
+	wolf->player.diry = sin(anglerx * 3.14 / 180);
+	wolf->raycaster.planex = 0.33 * wolf->player.diry;
+	wolf->raycaster.planey = -0.66 * wolf->player.dirx;
+}
 
 t_wolf3d	*wolf3d_create(void)
 {
@@ -35,7 +53,6 @@ void		wolf3d_core(t_wolf3d *wolf)
 {
 	SDL_Event			e;
 	Uint8				*keystate;
-	double				anglerx;
 
 	wolf->player.x = 3;
 	wolf->player.y = 3;
@@ -54,102 +71,11 @@ void		wolf3d_core(t_wolf3d *wolf)
 			if (e.type == SDL_QUIT)
 				wolf->quit = 0;
 			else if (e.type == SDL_MOUSEMOTION)
-			{
-				SDL_GetMouseState(&(wolf->mousex), &(wolf->mousey));
-				if (wolf->mousex > WINDW_W)
-					wolf->mousex %= WINDW_W;
-				if (wolf->mousex < 0)
-					wolf->mousex += WINDW_W;
-				anglerx = (double)(360 - (wolf->mousex * 360 / WINDW_W));
-				if (anglerx == 360)
-					anglerx /= 360;
-				wolf->player.dirx = cos(anglerx * 3.14 / 180);
-				wolf->player.diry = sin(anglerx * 3.14 / 180);
-				wolf->raycaster.planex = 0.33 * wolf->player.diry;
-				wolf->raycaster.planey = -0.66 * wolf->player.dirx;
-			}
+				wolf3d_handle_mouse(wolf);
 		}
 		wolf3d_inputs(keystate, wolf);
 		wolf3d_update(wolf);
 	}
-}
-
-void		wolf3d_inputs(const unsigned char *keystate, t_wolf3d *wolf)
-{
-	int		x;
-	int		y;
-	double	olddirx;
-	double	oldplanex;
-
-	x = 0;
-	y = 0;
-	if (keystate[SDL_SCANCODE_ESCAPE])
-		wolf->quit = 0;
-	if (keystate[SDL_SCANCODE_UP])
-	{
-		x = (int)(wolf->player.x + wolf->player.dirx
-				* wolf3d_player_get_movespeed(wolf));
-		y = (int)(wolf->player.y);
-		if (x && y && wolf->map->map[x][y] && wolf->map->map[x][y] == '0')
-			wolf->player.x += wolf->player.dirx *
-				wolf3d_player_get_movespeed(wolf);
-		x = (int)(wolf->player.x);
-		y = (int)(wolf->player.y + wolf->player.diry
-				* wolf3d_player_get_movespeed(wolf));
-		if (x && y && wolf->map->map[x][y] == '0')
-			wolf->player.y += wolf->player.diry *
-				wolf3d_player_get_movespeed(wolf);
-	}
-	if (keystate[SDL_SCANCODE_DOWN])
-	{
-		x = (int)(wolf->player.x - wolf->player.dirx
-				* wolf3d_player_get_movespeed(wolf));
-		y = (int)(wolf->player.y);
-		if (x && y && wolf->map->map[x][y] && wolf->map->map[x][y] == '0')
-			wolf->player.x -= wolf->player.dirx *
-				wolf3d_player_get_movespeed(wolf);
-		x = (int)(wolf->player.x);
-		y = (int)(wolf->player.y - wolf->player.diry
-				* wolf3d_player_get_movespeed(wolf));
-		if (x && y && wolf->map->map[x][y] == '0')
-			wolf->player.y -= wolf->player.diry *
-				wolf3d_player_get_movespeed(wolf);
-	}
-	if (keystate[SDL_SCANCODE_RIGHT])
-	{
-		olddirx = wolf->player.dirx;
-		oldplanex = wolf->raycaster.planex;
-		wolf->player.dirx = wolf->player.dirx *
-			cos(-wolf3d_player_get_rotspeed(wolf)) - wolf->player.diry *
-				sin(-wolf3d_player_get_rotspeed(wolf));
-		wolf->player.diry = olddirx * sin(-wolf3d_player_get_rotspeed(wolf)) +
-			wolf->player.diry * cos(-wolf3d_player_get_rotspeed(wolf));
-		wolf->raycaster.planex = wolf->raycaster.planex *
-			cos(-wolf3d_player_get_rotspeed(wolf)) -
-			wolf->raycaster.planey * sin(-wolf3d_player_get_rotspeed(wolf));
-		wolf->raycaster.planey = oldplanex *
-			sin(-wolf3d_player_get_rotspeed(wolf)) + wolf->raycaster.planey *
-				cos(-wolf3d_player_get_rotspeed(wolf));
-	}
-	if (keystate[SDL_SCANCODE_LEFT])
-	{
-		olddirx = wolf->player.dirx;
-		oldplanex = wolf->raycaster.planex;
-		wolf->player.dirx = wolf->player.dirx *
-			cos(wolf3d_player_get_rotspeed(wolf)) - wolf->player.diry *
-				sin(wolf3d_player_get_rotspeed(wolf));
-		wolf->player.diry = olddirx * sin(wolf3d_player_get_rotspeed(wolf)) +
-			wolf->player.diry * cos(wolf3d_player_get_rotspeed(wolf));
-		wolf->raycaster.planex = wolf->raycaster.planex *
-			cos(wolf3d_player_get_rotspeed(wolf)) - wolf->raycaster.planey *
-				sin(wolf3d_player_get_rotspeed(wolf));
-		wolf->raycaster.planey = oldplanex *
-			sin(wolf3d_player_get_rotspeed(wolf)) + wolf->raycaster.planey *
-				cos(wolf3d_player_get_rotspeed(wolf));
-	}
-	if (keystate[SDL_SCANCODE_KP_PLUS])
-		wolf3d_next_map(wolf);
-	wolf->player.isrunning = keystate[SDL_SCANCODE_SPACE];
 }
 
 void		wolf3d_update(t_wolf3d *wolf)

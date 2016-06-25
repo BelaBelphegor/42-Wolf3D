@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 18:36:42 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/25 01:28:25 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/25 03:29:38 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,42 +69,6 @@ int			wolf3d_init_map(t_wmap *map, char *buffer)
 		return (-1);
 	map->map[n] = NULL;
 	wolf3d_map_copy(map, buffer);
-	return (1);
-}
-
-int			wolf3d_next_map(t_wolf3d *wolf)
-{
-	DIR				*dirp;
-	struct dirent	*dp;
-	char			buffer[100];
-
-	wolf->player.x = 3;
-	wolf->player.y = 3;
-	if ((dirp = opendir("./maps")) == NULL)
-	{
-		perror("Couldn't open ./maps");
-		return (-1);
-	}
-	while ((dp = readdir(dirp)) != NULL)
-	{
-		ft_bzero(buffer, 100);
-		ft_strcat(buffer, "./maps/");
-		if (dp->d_name[0] != '.')
-		{
-			ft_strcat(buffer, dp->d_name);
-			if (ft_strcmp(buffer, wolf->map->name) != 0)
-			{
-				if (wolf3d_load_map(wolf, buffer))
-				{
-					closedir(dirp);
-					return (1);
-				}
-			}
-		}
-	}
-	closedir(dirp);
-	free(dp);
-	free(dirp);
 	return (1);
 }
 

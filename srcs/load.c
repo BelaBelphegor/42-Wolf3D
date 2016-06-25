@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 16:56:51 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/25 00:51:39 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/25 03:48:54 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,46 @@ int					wolf3d_loader(t_wolf3d *wolf)
 		return (-1);
 	if (wolf3d_load_skybox(wolf) == -1)
 		return (-1);
+	return (1);
+}
+
+static int			wolf3d_check_name(t_wolf3d *wolf, char *buffer,
+		struct dirent *dp)
+{
+	ft_strcat(buffer, dp->d_name);
+	if (ft_strcmp(buffer, wolf->map->name) != 0)
+	{
+		if (wolf3d_load_map(wolf, buffer))
+			return (1);
+	}
+	return (0);
+}
+
+int					wolf3d_next_map(t_wolf3d *wolf)
+{
+	DIR				*dirp;
+	struct dirent	*dp;
+	char			buffer[100];
+
+	wolf->player.x = 3;
+	wolf->player.y = 3;
+	if ((dirp = opendir("./maps")) == NULL)
+		return (-1);
+	while ((dp = readdir(dirp)) != NULL)
+	{
+		ft_bzero(buffer, 100);
+		ft_strcat(buffer, "./maps/");
+		if (dp->d_name[0] != '.')
+		{
+			if (wolf3d_check_name(wolf, buffer, dp))
+			{
+				closedir(dirp);
+				return (1);
+			}
+		}
+	}
+	closedir(dirp);
+	free(dp);
+	free(dirp);
 	return (1);
 }
