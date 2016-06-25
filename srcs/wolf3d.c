@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 17:04:46 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/21 00:29:09 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/25 02:02:55 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_wolf3d	*wolf3d_create(void)
 	wolf->skybox = NULL;
 	wolf->texture = NULL;
 	wolf->map = wolf3d_map_create();
+	wolf->map->map = NULL;
 	return (wolf);
 }
 
@@ -34,6 +35,7 @@ void		wolf3d_core(t_wolf3d *wolf)
 {
 	SDL_Event			e;
 	Uint8				*keystate;
+	double				anglerx;
 
 	wolf->player.x = 3;
 	wolf->player.y = 3;
@@ -45,7 +47,6 @@ void		wolf3d_core(t_wolf3d *wolf)
 	wolf->quit = 1;
 	keystate = NULL;
 	keystate = (Uint8 *)SDL_GetKeyboardState(NULL);
-
 	while (wolf->quit)
 	{
 		while (SDL_PollEvent(&e))
@@ -59,24 +60,17 @@ void		wolf3d_core(t_wolf3d *wolf)
 					wolf->mousex %= WINDW_W;
 				if (wolf->mousex < 0)
 					wolf->mousex += WINDW_W;
-				double		anglerx;
-				
-				printf("Angle RX: (%f)\n", (double)(360 - (wolf->mousex * 360 / WINDW_W)));
-				anglerx = (double)(360 - (wolf->mousex * 360 / WINDW_W));  
+				anglerx = (double)(360 - (wolf->mousex * 360 / WINDW_W));
 				if (anglerx == 360)
 					anglerx /= 360;
-				printf("%f old player.dirx\n", wolf->player.dirx);
 				wolf->player.dirx = cos(anglerx * 3.14 / 180);
-				printf("%f player.dirx\n", wolf->player.dirx);
-				printf("%f old player.diry\n", wolf->player.diry);
 				wolf->player.diry = sin(anglerx * 3.14 / 180);
-				printf("%f player.diry\n", wolf->player.diry);
 				wolf->raycaster.planex = 0.33 * wolf->player.diry;
 				wolf->raycaster.planey = -0.66 * wolf->player.dirx;
 			}
 		}
 		wolf3d_inputs(keystate, wolf);
-		wolf3d_update(wolf);	
+		wolf3d_update(wolf);
 	}
 }
 
@@ -97,12 +91,14 @@ void		wolf3d_inputs(const unsigned char *keystate, t_wolf3d *wolf)
 				* wolf3d_player_get_movespeed(wolf));
 		y = (int)(wolf->player.y);
 		if (x && y && wolf->map->map[x][y] && wolf->map->map[x][y] == '0')
-			wolf->player.x += wolf->player.dirx * wolf3d_player_get_movespeed(wolf);
-		x = (int)(wolf->player.x);	
+			wolf->player.x += wolf->player.dirx *
+				wolf3d_player_get_movespeed(wolf);
+		x = (int)(wolf->player.x);
 		y = (int)(wolf->player.y + wolf->player.diry
 				* wolf3d_player_get_movespeed(wolf));
 		if (x && y && wolf->map->map[x][y] == '0')
-			wolf->player.y += wolf->player.diry * wolf3d_player_get_movespeed(wolf);	
+			wolf->player.y += wolf->player.diry *
+				wolf3d_player_get_movespeed(wolf);
 	}
 	if (keystate[SDL_SCANCODE_DOWN])
 	{
@@ -110,39 +106,49 @@ void		wolf3d_inputs(const unsigned char *keystate, t_wolf3d *wolf)
 				* wolf3d_player_get_movespeed(wolf));
 		y = (int)(wolf->player.y);
 		if (x && y && wolf->map->map[x][y] && wolf->map->map[x][y] == '0')
-			wolf->player.x -= wolf->player.dirx * wolf3d_player_get_movespeed(wolf);
-		x = (int)(wolf->player.x);	
+			wolf->player.x -= wolf->player.dirx *
+				wolf3d_player_get_movespeed(wolf);
+		x = (int)(wolf->player.x);
 		y = (int)(wolf->player.y - wolf->player.diry
 				* wolf3d_player_get_movespeed(wolf));
 		if (x && y && wolf->map->map[x][y] == '0')
-			wolf->player.y -= wolf->player.diry * wolf3d_player_get_movespeed(wolf);	
+			wolf->player.y -= wolf->player.diry *
+				wolf3d_player_get_movespeed(wolf);
 	}
 	if (keystate[SDL_SCANCODE_RIGHT])
 	{
 		olddirx = wolf->player.dirx;
 		oldplanex = wolf->raycaster.planex;
-		wolf->player.dirx = wolf->player.dirx * cos(-wolf3d_player_get_rotspeed(wolf)) -
-			wolf->player.diry * sin(-wolf3d_player_get_rotspeed(wolf));
+		wolf->player.dirx = wolf->player.dirx *
+			cos(-wolf3d_player_get_rotspeed(wolf)) - wolf->player.diry *
+				sin(-wolf3d_player_get_rotspeed(wolf));
 		wolf->player.diry = olddirx * sin(-wolf3d_player_get_rotspeed(wolf)) +
 			wolf->player.diry * cos(-wolf3d_player_get_rotspeed(wolf));
-		wolf->raycaster.planex = wolf->raycaster.planex * cos(-wolf3d_player_get_rotspeed(wolf)) -
+		wolf->raycaster.planex = wolf->raycaster.planex *
+			cos(-wolf3d_player_get_rotspeed(wolf)) -
 			wolf->raycaster.planey * sin(-wolf3d_player_get_rotspeed(wolf));
-		wolf->raycaster.planey = oldplanex * sin(-wolf3d_player_get_rotspeed(wolf)) +
-			wolf->raycaster.planey * cos(-wolf3d_player_get_rotspeed(wolf));
+		wolf->raycaster.planey = oldplanex *
+			sin(-wolf3d_player_get_rotspeed(wolf)) + wolf->raycaster.planey *
+				cos(-wolf3d_player_get_rotspeed(wolf));
 	}
 	if (keystate[SDL_SCANCODE_LEFT])
 	{
 		olddirx = wolf->player.dirx;
 		oldplanex = wolf->raycaster.planex;
-		wolf->player.dirx = wolf->player.dirx * cos(wolf3d_player_get_rotspeed(wolf)) -
-			wolf->player.diry * sin(wolf3d_player_get_rotspeed(wolf));
+		wolf->player.dirx = wolf->player.dirx *
+			cos(wolf3d_player_get_rotspeed(wolf)) - wolf->player.diry *
+				sin(wolf3d_player_get_rotspeed(wolf));
 		wolf->player.diry = olddirx * sin(wolf3d_player_get_rotspeed(wolf)) +
 			wolf->player.diry * cos(wolf3d_player_get_rotspeed(wolf));
-		wolf->raycaster.planex = wolf->raycaster.planex * cos(wolf3d_player_get_rotspeed(wolf)) -
-			wolf->raycaster.planey * sin(wolf3d_player_get_rotspeed(wolf));
-		wolf->raycaster.planey = oldplanex * sin(wolf3d_player_get_rotspeed(wolf)) +
-			wolf->raycaster.planey * cos(wolf3d_player_get_rotspeed(wolf));
+		wolf->raycaster.planex = wolf->raycaster.planex *
+			cos(wolf3d_player_get_rotspeed(wolf)) - wolf->raycaster.planey *
+				sin(wolf3d_player_get_rotspeed(wolf));
+		wolf->raycaster.planey = oldplanex *
+			sin(wolf3d_player_get_rotspeed(wolf)) + wolf->raycaster.planey *
+				cos(wolf3d_player_get_rotspeed(wolf));
 	}
+	if (keystate[SDL_SCANCODE_KP_PLUS])
+		wolf3d_next_map(wolf);
 	wolf->player.isrunning = keystate[SDL_SCANCODE_SPACE];
 }
 

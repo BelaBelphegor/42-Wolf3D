@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/05 17:47:33 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/17 20:05:27 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/24 22:25:14 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ double		wolf3d_player_get_rotspeed(t_wolf3d *wolf)
 {
 	double movespeed;
 
-	movespeed = (wolf->player.isrunning) ? ROT_SPEED_MODIFIER * 1.5 : 
+	movespeed = (wolf->player.isrunning) ? ROT_SPEED_MODIFIER * 1.5 :
 		ROT_SPEED_MODIFIER;
 	return (wolf->frametime * movespeed);
 }

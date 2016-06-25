@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 15:46:49 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/24 05:14:06 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/24 21:20:10 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ int					wolf3d_loader(t_wolf3d *wolf);
 int					wolf3d_load_map(t_wolf3d *wolf3d, char *path);
 void				wolf3d_core(t_wolf3d *wolf);
 int					wolf3d_init_map(t_wmap *map, char *buffer);
+int					wolf3d_next_map(t_wolf3d *wolf);
 void				wolf3d_map_destroy(t_wmap *map);
 int					wolf3d_init_graphics(t_wolf3d *wolf);
 void				wolf3d_close(t_wolf3d *wolf);

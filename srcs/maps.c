@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 18:36:42 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/24 05:35:47 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/06/25 01:28:25 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int			wolf3d_init_map(t_wmap *map, char *buffer)
 	n = 0;
 	if (!buffer || buffer[0] == 0)
 		return (-1);
-	if (!map || map == NULL)
+	if (!map)
 		return (-1);
 	while (buffer[i] != '\0')
 	{
@@ -72,16 +72,11 @@ int			wolf3d_init_map(t_wmap *map, char *buffer)
 	return (1);
 }
 
-int			wolf3d_map_integriy(t_wmap *map)
-{
-	(void)map;
-	return (1);
-}
-
 int			wolf3d_next_map(t_wolf3d *wolf)
 {
 	DIR				*dirp;
-	struct dirent 	*dp;
+	struct dirent	*dp;
+	char			buffer[100];
 
 	wolf->player.x = 3;
 	wolf->player.y = 3;
@@ -92,12 +87,24 @@ int			wolf3d_next_map(t_wolf3d *wolf)
 	}
 	while ((dp = readdir(dirp)) != NULL)
 	{
-		if (dp->d_name != wolf->map->name)
+		ft_bzero(buffer, 100);
+		ft_strcat(buffer, "./maps/");
+		if (dp->d_name[0] != '.')
 		{
-			if (wolf3d_load_map(wolf, dp->d_name))
-				return (1);
+			ft_strcat(buffer, dp->d_name);
+			if (ft_strcmp(buffer, wolf->map->name) != 0)
+			{
+				if (wolf3d_load_map(wolf, buffer))
+				{
+					closedir(dirp);
+					return (1);
+				}
+			}
 		}
 	}
+	closedir(dirp);
+	free(dp);
+	free(dirp);
 	return (1);
 }
 
@@ -113,6 +120,7 @@ void		wolf3d_map_destroy(t_wmap *map)
 		i++;
 	}
 	free(map->map[i]);
+	map->map[i] = NULL;
 	free(map->map);
 	map->map = NULL;
 	free(map);
