@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 17:05:36 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/25 03:26:24 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/08/03 17:15:51 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ int			wolf3d_init_graphics(t_wolf3d *wolf)
 		ft_putstr_fd(SDL_GetError(), 2);
 		return (-1);
 	}
-	wolf->pWindow = SDL_CreateWindow("Wolf3D", SDL_WINDOWPOS_CENTERED,
+	wolf->pwindow = SDL_CreateWindow("Wolf3D", SDL_WINDOWPOS_CENTERED,
 			SDL_WINDOWPOS_CENTERED, WINDW_W, WINDW_H, SDL_WINDOW_SHOWN);
-	wolf->renderer = SDL_CreateRenderer(wolf->pWindow, -1,
+	wolf->renderer = SDL_CreateRenderer(wolf->pwindow, -1,
 			SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	if (wolf->renderer == NULL)
 	{
@@ -113,7 +113,7 @@ void		wolf3d_destroy_graphics(t_wolf3d *wolf)
 	wolf->skybox = NULL;
 	wolf->texture = NULL;
 	SDL_DestroyRenderer(wolf->renderer);
-	SDL_DestroyWindow(wolf->pWindow);
-	wolf->pWindow = NULL;
+	SDL_DestroyWindow(wolf->pwindow);
+	wolf->pwindow = NULL;
 	wolf->renderer = NULL;
 }

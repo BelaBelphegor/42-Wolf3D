@@ -6,7 +6,7 @@
 /*   By: tiboitel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 17:04:46 by tiboitel          #+#    #+#             */
-/*   Updated: 2016/06/25 04:03:25 by tiboitel         ###   ########.fr       */
+/*   Updated: 2016/08/03 17:15:06 by tiboitel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_wolf3d	*wolf3d_create(void)
 	wolf = NULL;
 	if (!(wolf = (t_wolf3d *)ft_memalloc(sizeof(t_wolf3d))))
 		return (NULL);
-	wolf->pWindow = NULL;
+	wolf->pwindow = NULL;
 	wolf->renderer = NULL;
 	wolf->frame = 0;
 	wolf->map = NULL;
