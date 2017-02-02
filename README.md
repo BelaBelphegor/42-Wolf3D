@@ -1,6 +1,3 @@
 # Wolf3D
 
-* Verifier l'integritee de la maps = pas de carte vide
-* Ajouter base de moteur : update, render et separer le core du reste.
-* Mettre au propre l'initialisation
-* Ajouter une structure raycaster
+Wolf3D clone for school project. Game using a raycaster motor. Has a skybox, moving with the mouse, textures, audio ... Compiled on Mac OSx with SDL.Framework and SDLMixer.
